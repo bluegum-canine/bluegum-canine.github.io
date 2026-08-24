@@ -47,12 +47,19 @@ AREA = "Sligo, the North West & beyond"
 # Set to False on launch day and rebuild.
 PRIVATE = True
 
-# Where the site is served from. "" means the root of a domain — a custom
-# domain via CNAME, or a user page at squirreleater.github.io. A GitHub
-# *project* page lives under a subpath, so set this to
-# "/bluegum-dog-training" for that, or every root-relative /assets/... and
-# /services.html on the site 404s.
+# Where the build is actually served from, right now. A GitHub *project*
+# page lives under a subpath, so BASE prefixes every root-relative link and
+# asset — without it each /assets/... and /services.html 404s. The fonts in
+# site.css use ../fonts/ relative paths so they survive any BASE.
+#
+# On launch: SERVE_ORIGIN = DOMAIN, BASE = "", rename CNAME.disabled back.
+SERVE_ORIGIN = "https://bluegum-canine.github.io"
 BASE = ""
+
+# The origin used for canonical, og:url, og:image and the structured data.
+# It has to be somewhere that actually resolves or link previews break, so
+# it follows the real serving location rather than the eventual domain.
+SITE = SERVE_ORIGIN + BASE
 
 NAV = [
     ("Services", "/services.html"),
@@ -72,10 +79,10 @@ LD = {
     "additionalType": "https://schema.org/ProfessionalService",
     "name": BRAND,
     "founder": {"@type": "Person", "name": PERSON},
-    "url": DOMAIN,
+    "url": SITE,
     "telephone": PHONE_E164,
     "email": EMAIL,
-    "image": DOMAIN + "/assets/img/og.jpg",
+    "image": SITE + "/assets/img/og.jpg",
     "priceRange": "€€",
     "address": {
         "@type": "PostalAddress",
@@ -292,8 +299,8 @@ def render(fragment_path, out_path, title, desc, current=""):
         body = f.read()
     page = SHELL.format(
         title=html.escape(title), desc=html.escape(desc),
-        canonical=DOMAIN + "/" + out_path.replace("index.html", "").lstrip("/"),
-        brand=BRAND, person=PERSON, domain=DOMAIN,
+        canonical=SITE + "/" + out_path.replace("index.html", "").lstrip("/"),
+        brand=BRAND, person=PERSON, domain=SITE,
         phone_e164=PHONE_E164, phone_display=PHONE_DISPLAY,
         email=EMAIL, area=AREA, year=2026,
         ld=json.dumps(LD, separators=(",", ":")),
