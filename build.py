@@ -408,12 +408,11 @@ def main():
          "six-month residential Master Trainer programme. The full module list, "
          "published.",
          "/qualification.html"),
-        ("training-tools.html", "training-tools.html",
-         "Training tools — %s" % BRAND,
-         "Prong and electronic collars are sold with no instruction. Fit, "
-         "timing, level, and the order things have to be taught in — or how to "
-         "get the same result without them.",
-         "/training-tools.html"),
+        # SHELVED 24 Aug 2026 — the training-tools page. The source is kept at
+        # _src/training-tools.shelved.html. It named prong and electronic
+        # collars directly, which invites an argument the business does not
+        # need; the balanced-approach section on the method page carries the
+        # position without naming hardware. Re-add this entry to publish it.
         ("case-studies.html", "case-studies.html",
          "Case studies — %s" % BRAND,
          "Written-up cases: the presenting problem, what was actually causing "
@@ -447,7 +446,7 @@ def main():
 
     # robots + sitemap
     urls = ["/", "/services.html", "/method.html", "/about.html",
-            "/qualification.html", "/training-tools.html", "/case-studies.html",
+            "/qualification.html", "/case-studies.html",
             "/contact.html", "/problems/"] + \
            ["/problems/%s.html" % s for s, _, _ in PROBLEMS]
     sitemap = os.path.join(ROOT, "sitemap.xml")
