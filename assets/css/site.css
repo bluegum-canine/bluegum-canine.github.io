@@ -28,6 +28,12 @@
   src: url("../fonts/GeistMono-Regular.woff2") format("woff2");
   font-weight: 400; font-style: normal; font-display: swap;
 }
+@font-face {
+  /* Variable, so one 66KB file covers every heading weight we use. */
+  font-family: "Fraunces";
+  src: url("../fonts/Fraunces-Variable.woff2") format("woff2-variations");
+  font-weight: 400 700; font-style: normal; font-display: swap;
+}
 
 :root {
   --paper:  #F2EDE4;
@@ -41,7 +47,8 @@
   --muted:  #857C70;
   --rule:   #CFC6B6;
 
-  --display: "Big Shoulders", "Haettenschweiler", "Arial Narrow", sans-serif;
+  --display: "Fraunces", "Iowan Old Style", Palatino, Georgia, serif;
+  --display-condensed: "Big Shoulders", "Haettenschweiler", "Arial Narrow", sans-serif;
   --body: "Crimson Pro", Georgia, "Times New Roman", serif;
   --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
@@ -90,12 +97,12 @@ a:hover { color: var(--accent); text-decoration-color: currentColor; }
 
 /* ------------------------------------------------------------ typography */
 .display {
-  font-family: var(--display); font-weight: 700; color: var(--moss);
-  line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase;
-  margin: 0;
+  font-family: var(--display); font-weight: 500; color: var(--moss);
+  line-height: 1.06; letter-spacing: -0.012em; text-transform: none;
+  margin: 0; font-variation-settings: "opsz" 96;
 }
-h1.display { font-size: clamp(3rem, 11vw, 6.5rem); }
-h2.display { font-size: clamp(2.1rem, 6vw, 3.6rem); }
+h1.display { font-size: clamp(2.4rem, 8vw, 4.6rem); }
+h2.display { font-size: clamp(1.8rem, 4.4vw, 2.7rem); }
 h3 { font-family: var(--body); font-weight: 400; color: var(--moss);
      font-size: clamp(1.3rem, 2vw, 1.6rem); line-height: 1.25; margin: 0 0 .4rem; }
 
@@ -139,9 +146,12 @@ em, .em { font-style: italic; }
 .wordmark-mark { height: 2.9rem; width: auto; display: block; }
 .wordmark-text { display: block; }
 .wordmark-name {
-  display: block; font-family: var(--display); font-weight: 700;
-  text-transform: uppercase; color: var(--paper); line-height: .9;
-  font-size: 1.6rem; letter-spacing: .015em;
+  /* Fraunces is a good deal wider than the condensed face it replaced, and
+     the masthead has to stay one row — hence the smaller size and the
+     slightly negative tracking. */
+  display: block; font-family: var(--display); font-weight: 600;
+  text-transform: uppercase; color: var(--paper); line-height: .98;
+  font-size: 1.28rem; letter-spacing: -.005em;
 }
 .wordmark-sub {
   display: block; font-family: var(--mono); font-size: .58rem;
@@ -171,11 +181,14 @@ em, .em { font-style: italic; }
    no specificity, so an override placed earlier in the file simply loses. */
 @media (min-width: 52.01rem) {
   .masthead-in { padding-inline: clamp(1.1rem, 2.4vw, 2rem); gap: .8rem 1.4rem; }
-  .nav { gap: .4rem 1.15rem; flex-wrap: nowrap; }
-  .nav a { font-size: .70rem; letter-spacing: .085em; white-space: nowrap; }
-  .masthead-call { font-size: 1.05rem; padding: .34rem .8rem .4rem; }
+  .nav { gap: .4rem .95rem; flex-wrap: nowrap; }
+  .nav a { font-size: .70rem; letter-spacing: .07em; white-space: nowrap; }
+  .masthead-call {
+    font-family: var(--display-condensed); font-weight: 700;
+    font-size: 1.05rem; padding: .34rem .78rem .4rem;
+  }
 }
-@media (min-width: 62rem) {
+@media (min-width: 64rem) {
   .masthead-in { flex-wrap: nowrap; }
   .wordmark-name, .wordmark-sub { white-space: nowrap; }
 }
@@ -197,7 +210,7 @@ em, .em { font-style: italic; }
   }
   .navtoggle[open] > summary::after { border-bottom-color: transparent; }
   .masthead-in { padding-block: .7rem; gap: .5rem .7rem; flex-wrap: wrap; }
-  .wordmark-name { font-size: 1.2rem; }
+  .wordmark-name { font-size: 1.08rem; }
   .wordmark-mark { height: 2.3rem; }
   .wordmark { gap: .45rem; }
   .nav { display: none; }
@@ -262,7 +275,7 @@ em, .em { font-style: italic; }
    Benbulben. Pull it to the frame edge so it sits on open sky. */
 .hero-overlay .wrap { max-width: none; padding-inline: clamp(1rem, 2.4vw, 2.1rem); }
 .hero-overlay .display { color: var(--paper); }
-.hero-overlay h1.display { font-size: clamp(1.9rem, 5.2vw, 3.6rem); }
+.hero-overlay h1.display { font-size: clamp(1.7rem, 4.4vw, 3rem); }
 .hero-tagline {
   font-style: italic; font-size: clamp(.95rem, 1.5vw, 1.35rem);
   color: rgba(242,237,228,.92); margin: .45rem 0 0; max-width: 30em;
@@ -309,7 +322,7 @@ em, .em { font-style: italic; }
    gets a shorter run-up and a slightly smaller title. */
 main > .section:first-child { padding-top: clamp(1.9rem, 4vw, 3.1rem); }
 main > .section:first-child .section-head { margin-bottom: clamp(1.4rem, 3vw, 2.2rem); }
-main > .section:first-child h2.display { font-size: clamp(2rem, 5vw, 3rem); }
+main > .section:first-child h2.display { font-size: clamp(1.7rem, 4vw, 2.5rem); }
 .section-head .lede { margin: 1rem 0 0; max-width: 34em; color: var(--ink); }
 .section-tint { background: var(--paper-2); }
 
@@ -334,7 +347,7 @@ main > .section:first-child h2.display { font-size: clamp(2rem, 5vw, 3rem); }
               grid-template-columns: 1fr; }
 @media (min-width: 46rem) { .principles { grid-template-columns: 1fr 1fr; } }
 .principle h2 {
-  font-family: var(--display); font-weight: 700; text-transform: uppercase;
+  font-family: var(--display); font-weight: 500; text-transform: none;
   color: var(--moss); font-size: clamp(1.7rem, 3.4vw, 2.4rem);
   line-height: .95; margin: .5rem 0 .9rem;
 }
@@ -466,7 +479,7 @@ a.contact-value:hover { color: var(--accent); }
 @media (min-width: 46rem) {
   .foot-grid { grid-template-columns: 2fr 1fr 1fr; gap: 3rem; }
 }
-.foot-name { font-size: clamp(2rem, 5vw, 2.9rem); margin-bottom: .5rem; }
+.foot-name { font-size: clamp(1.7rem, 4vw, 2.3rem); margin-bottom: .5rem; }
 .foot-note { color: var(--muted); max-width: 24em; font-style: italic;
              margin: .8rem 0 1.4rem; }
 .foot-badge { width: 180px; height: auto; }

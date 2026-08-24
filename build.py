@@ -203,7 +203,7 @@ SHELL = """<!doctype html>
 <link rel="icon" href="/assets/img/logo/logo-mark.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/assets/img/favicon.png" type="image/png">
-<link rel="preload" href="/assets/fonts/BigShoulders-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/Fraunces-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/CrimsonPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css?v={cssv}">
 <script type="application/ld+json">{ld}</script>
