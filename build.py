@@ -22,7 +22,10 @@ SRC = os.path.join(ROOT, "_src")
 # One place to change the trading name. See online-presence-plan.md,
 # "Decision 0" — if the name changes, this is the edit.
 BRAND = "Bluegum Canine"
-PERSON = "Mark Rabel"
+# First name only, deliberately. The business is the brand; the person is the
+# face. This feeds the footer, the About title, the meta descriptions and the
+# LocalBusiness founder field, so it is the single edit for all of them.
+PERSON = "Mark"
 # The domain the business will launch on. Registered at Blacknight on
 # 24 Aug 2026 along with bluegumcanine.com, which forwards here — .ie leads
 # because to a local buyer it reads as *here*. Not yet pointed at GitHub and
@@ -97,7 +100,7 @@ LD = {
         "addressRegion": "Co. Sligo",
         "addressCountry": "IE",
     },
-    # Drive-time rings from Derrynaneane, not a fixed region. The counties are
+    # Drive-time rings from the base near Boyle, not a fixed region. The counties are
     # the one-to-one catchment; residential, assistance dog and assessment work
     # is taken nationally, hence Ireland on the end.
     "areaServed": [
@@ -194,6 +197,7 @@ SHELL = """<!doctype html>
 <meta property="og:image" content="{domain}/assets/img/og.jpg">
 <meta property="og:locale" content="en_IE">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/img/logo/logo-mark.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/assets/img/favicon.png" type="image/png">
 <link rel="preload" href="/assets/fonts/BigShoulders-Bold.woff2" as="font" type="font/woff2" crossorigin>
@@ -207,8 +211,12 @@ SHELL = """<!doctype html>
 <header class="masthead">
   <div class="wrap masthead-in">
     <a class="wordmark" href="/">
-      <span class="wordmark-name">{brand}</span>
-      <span class="wordmark-sub">Behaviour practice &middot; Co. Sligo</span>
+      <img class="wordmark-mark" src="/assets/img/logo/logo-mark-reversed.svg"
+           width="158" height="141" alt="">
+      <span class="wordmark-text">
+        <span class="wordmark-name">{brand}</span>
+        <span class="wordmark-sub">Behaviour practice &middot; Co. Sligo</span>
+      </span>
     </a>
     <details class="navtoggle">
       <summary aria-label="Menu">Menu</summary>
@@ -235,6 +243,8 @@ SHELL = """<!doctype html>
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
+        <img class="foot-seal" src="/assets/img/logo/logo-seal.svg"
+             width="200" height="200" loading="lazy" alt="">
         <p class="display foot-name">{brand}</p>
         <p class="label">{person} &middot; Behaviour practice, Co. Sligo</p>
         <p class="foot-note">Calm, methodical training for dogs that have to
@@ -377,7 +387,7 @@ def main():
          "%s — Dog Training & Behaviour, Co. Sligo" % BRAND,
          "Calm, methodical dog training from Co. Sligo across Connacht and the "
          "midlands. Obedience, recall, reactivity and residential training with "
-         "%s, Master Trainer, full IACP member." % PERSON, ""),
+         "%s, a Master Trainer and full IACP member." % PERSON, ""),
         ("services.html", "services.html",
          "Services — %s" % BRAND,
          "Puppy foundations, everyday obedience, behaviour consultation, "

@@ -1,6 +1,6 @@
 # Bluegum Dog Training — website
 
-Static site for **Mark Rabel · Dog Training & Behaviour**, Co. Sligo.
+Static site for **Bluegum Canine · Behaviour Practice**, Co. Sligo.
 Hosted on GitHub Pages. Live for review at `bluegum-canine.github.io`;
 launches on `bluegumcanine.ie`, with `bluegumcanine.com` forwarding to it.
 
@@ -70,7 +70,7 @@ These are placeholders, marked so they can't be published by accident:
 - **Email.** Still `newmark22@gmail.com`. Change `EMAIL` in `build.py` once
   `mark@bluegumcanine.ie` exists.
 - **Trading name.** The site is built as *Bluegum Dog Training* with Mark
-  Rabel as the face. If that changes, `BRAND` in `build.py` is the one edit.
+  Mark as the face. If that changes, `BRAND` in `build.py` is the one edit.
 - **Booking calendar.** `_src/contact.html` has a placeholder block where a
   Cal.com embed goes.
 - **Testimonials.** Nothing invented. Add real ones after the first clients.

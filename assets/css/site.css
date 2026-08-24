@@ -129,7 +129,15 @@ em, .em { font-style: italic; }
   display: flex; align-items: center; gap: 1rem 2rem; flex-wrap: wrap;
   padding-block: .85rem;
 }
-.wordmark { text-decoration: none; display: block; margin-right: auto; }
+.wordmark {
+  text-decoration: none; margin-right: auto;
+  display: flex; align-items: center; gap: .6rem;
+}
+/* The full seal is unreadable at masthead height — the arced name turns to
+   mush below about 60px — so the header carries the text-free mark and lets
+   the wordmark beside it do the reading. */
+.wordmark-mark { height: 2.5rem; width: auto; display: block; }
+.wordmark-text { display: block; }
 .wordmark-name {
   display: block; font-family: var(--display); font-weight: 700;
   text-transform: uppercase; color: var(--paper); line-height: .9;
@@ -174,6 +182,8 @@ em, .em { font-style: italic; }
   .navtoggle[open] > summary::after { border-bottom-color: transparent; }
   .masthead-in { padding-block: .7rem; gap: .5rem .7rem; flex-wrap: wrap; }
   .wordmark-name { font-size: 1.2rem; }
+  .wordmark-mark { height: 2rem; }
+  .wordmark { gap: .45rem; }
   .nav { display: none; }
   .navtoggle[open] ~ .nav {
     display: flex; order: 4; width: 100%; flex-direction: column; gap: 0;
@@ -493,3 +503,8 @@ a.contact-value:hover { color: var(--accent); }
          text-transform: uppercase; color: var(--muted); margin: 0 0 1.2rem; }
 .crumb a { text-decoration: none; color: var(--muted); }
 .crumb a:hover { color: var(--accent); }
+
+/* The seal at a size it can actually be read — the footer is the one place
+   on every page with room for it. */
+.foot-seal { display: block; width: 7.5rem; height: auto; margin: 0 0 1.1rem; }
+@media (max-width: 40rem) { .foot-seal { width: 6rem; } }
