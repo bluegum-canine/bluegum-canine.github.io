@@ -302,6 +302,14 @@ em, .em { font-style: italic; }
 .section { padding-block: var(--step); }
 .section + .section { border-top: 1px solid var(--rule); }
 .section-head { margin-bottom: clamp(1.8rem, 4vw, 2.8rem); }
+/* The first section on an interior page carries the page title, and it was
+   costing 451px of a 768px laptop before a word of content appeared: 75px of
+   masthead, 104px of section padding, a 106px two-line heading and 45px of
+   head margin. The page has no hero to justify that, so the opening section
+   gets a shorter run-up and a slightly smaller title. */
+main > .section:first-child { padding-top: clamp(1.9rem, 4vw, 3.1rem); }
+main > .section:first-child .section-head { margin-bottom: clamp(1.4rem, 3vw, 2.2rem); }
+main > .section:first-child h2.display { font-size: clamp(2rem, 5vw, 3rem); }
 .section-head .lede { margin: 1rem 0 0; max-width: 34em; color: var(--ink); }
 .section-tint { background: var(--paper-2); }
 

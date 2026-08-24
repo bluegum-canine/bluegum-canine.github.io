@@ -34,6 +34,9 @@ PERSON = "Mark"
 DOMAIN = "https://bluegumcanine.ie"
 PHONE_DISPLAY = "085 738 6848"
 PHONE_E164 = "+353857386848"
+# wa.me takes digits only — a leading + makes the link fail rather than
+# open a chat, so the WhatsApp link uses this and tel: uses the E.164 form.
+PHONE_WA = PHONE_E164.lstrip("+")
 # This mailbox must exist and be monitored before the site goes public —
 # it is on every page, in the footer and in the structured data.
 # On every page and in the structured data. NOTE: the mailbox does not exist
@@ -320,6 +323,7 @@ def render(fragment_path, out_path, title, desc, current=""):
     )
     # Let fragments use {{PHONE}}, {{EMAIL}} etc. without escaping headaches.
     for k, v in [("PHONE", PHONE_DISPLAY), ("PHONE_E164", PHONE_E164),
+                 ("PHONE_WA", PHONE_WA),
                  ("EMAIL", EMAIL), ("BRAND", BRAND), ("PERSON", PERSON),
                  ("AREA", AREA)]:
         page = page.replace("{{%s}}" % k, v)
