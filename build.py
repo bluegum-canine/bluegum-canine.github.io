@@ -23,15 +23,23 @@ SRC = os.path.join(ROOT, "_src")
 # "Decision 0" — if the name changes, this is the edit.
 BRAND = "Bluegum Canine"
 PERSON = "Mark Rabel"
-# TODO: move to https://bluegumcanine.com once registered, and redirect
-# bluegumdogtraining.com to it. Not changed yet — this must name a domain
-# that actually resolves, or canonical URLs and og:url break.
-DOMAIN = "https://bluegumdogtraining.com"
+# The domain the business will launch on. Registered at Blacknight on
+# 24 Aug 2026 along with bluegumcanine.com, which forwards here — .ie leads
+# because to a local buyer it reads as *here*. Not yet pointed at GitHub and
+# deliberately so: SERVE_ORIGIN below is what canonical and og:url actually
+# use, and it stays on github.io until launch. See Decisions D-18.
+DOMAIN = "https://bluegumcanine.ie"
 PHONE_DISPLAY = "085 738 6848"
 PHONE_E164 = "+353857386848"
 # This mailbox must exist and be monitored before the site goes public —
 # it is on every page, in the footer and in the structured data.
-EMAIL = "mark@bluegumdogtraining.com"   # TODO: mark@bluegumcanine.com
+# On every page and in the structured data. NOTE: the mailbox does not exist
+# yet — the domain was registered on 24 Aug and email has still to be set up,
+# so anything sent here currently bounces. It must be live and monitored
+# before the site is shown to an actual customer. Matches the primary domain
+# deliberately; mark@bluegumcanine.com would work too but mixing the two
+# across the site invites mistyping.
+EMAIL = "mark@bluegumcanine.ie"
 AREA = "Sligo, the North West & beyond"
 
 # --------------------------------------------------------------- visibility

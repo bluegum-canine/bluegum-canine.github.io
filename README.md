@@ -1,7 +1,8 @@
 # Bluegum Dog Training — website
 
 Static site for **Mark Rabel · Dog Training & Behaviour**, Co. Sligo.
-Hosted on GitHub Pages at `bluegumdogtraining.com`.
+Hosted on GitHub Pages. Live for review at `bluegum-canine.github.io`;
+launches on `bluegumcanine.ie`, with `bluegumcanine.com` forwarding to it.
 
 No framework, no build tooling, no dependencies. Plain Python 3.
 
@@ -67,7 +68,7 @@ These are placeholders, marked so they can't be published by accident:
 - **Prices.** Every service shows `Price to confirm`. Search `_src/` for that
   string.
 - **Email.** Still `newmark22@gmail.com`. Change `EMAIL` in `build.py` once
-  `mark@bluegumdogtraining.com` exists.
+  `mark@bluegumcanine.ie` exists.
 - **Trading name.** The site is built as *Bluegum Dog Training* with Mark
   Rabel as the face. If that changes, `BRAND` in `build.py` is the one edit.
 - **Booking calendar.** `_src/contact.html` has a placeholder block where a
@@ -115,8 +116,8 @@ while still letting real search engines crawl (they must be able to read the
 noindex), and skips `sitemap.xml` entirely. It is obscurity, not a lock —
 anyone with the link can open it.
 
-`CNAME` is parked as `CNAME.disabled` because `bluegumdogtraining.com` still
-points at GoDaddy. A live `CNAME` file makes GitHub redirect the `github.io`
+`CNAME` is parked as `CNAME.disabled` because `bluegumcanine.ie` is registered
+but not yet pointed at GitHub. A live `CNAME` file makes GitHub redirect the `github.io`
 URL to the custom domain, which would take the site offline until the DNS is
 changed. To go live: point the domain's A records at GitHub Pages, rename the
 file back to `CNAME`, set `PRIVATE = False`, and rebuild.
