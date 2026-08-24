@@ -211,8 +211,8 @@ SHELL = """<!doctype html>
 <header class="masthead">
   <div class="wrap masthead-in">
     <a class="wordmark" href="/">
-      <img class="wordmark-mark" src="/assets/img/logo/logo-mark-reversed.svg"
-           width="158" height="141" alt="">
+      <img class="wordmark-mark" src="/assets/img/logo/seal-paper.png"
+           width="454" height="454" alt="">
       <span class="wordmark-text">
         <span class="wordmark-name">{brand}</span>
         <span class="wordmark-sub">Behaviour practice &middot; Co. Sligo</span>
@@ -225,13 +225,6 @@ SHELL = """<!doctype html>
       {nav}
     </nav>
     <a class="masthead-call" href="tel:{phone_e164}">{phone_display}</a>
-    <p class="proof-in">
-      <span><b>960 hrs</b> Master Trainer</span>
-      <span><b>20+ yrs</b> with dogs</span>
-      <span><b>IACP</b> full member</span>
-      <span><b>Insured</b> care, custody &amp; control</span>
-      <a href="/qualification.html">What that covers &rarr;</a>
-    </p>
   </div>
 </header>
 
@@ -243,8 +236,8 @@ SHELL = """<!doctype html>
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <img class="foot-seal" src="/assets/img/logo/logo-seal.svg"
-             width="200" height="200" loading="lazy" alt="">
+        <img class="foot-seal" src="/assets/img/logo/seal-moss.png"
+             width="454" height="454" loading="lazy" alt="">
         <p class="display foot-name">{brand}</p>
         <p class="label">{person} &middot; Behaviour practice, Co. Sligo</p>
         <p class="foot-note">Calm, methodical training for dogs that have to

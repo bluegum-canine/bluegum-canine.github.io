@@ -136,7 +136,7 @@ em, .em { font-style: italic; }
 /* The full seal is unreadable at masthead height — the arced name turns to
    mush below about 60px — so the header carries the text-free mark and lets
    the wordmark beside it do the reading. */
-.wordmark-mark { height: 2.5rem; width: auto; display: block; }
+.wordmark-mark { height: 2.9rem; width: auto; display: block; }
 .wordmark-text { display: block; }
 .wordmark-name {
   display: block; font-family: var(--display); font-weight: 700;
@@ -164,6 +164,22 @@ em, .em { font-style: italic; }
 }
 .masthead-call:hover { background: var(--accent); color: var(--paper); }
 
+/* One row, and it has to stay one row. The body gutter is 3.5rem a side,
+   which on its own was enough to push the phone button onto a line of its
+   own, so the masthead takes a narrower gutter and a tighter nav.
+   These rules must sit after the base .nav rule above — a media query adds
+   no specificity, so an override placed earlier in the file simply loses. */
+@media (min-width: 52.01rem) {
+  .masthead-in { padding-inline: clamp(1.1rem, 2.4vw, 2rem); gap: .8rem 1.4rem; }
+  .nav { gap: .4rem 1.15rem; flex-wrap: nowrap; }
+  .nav a { font-size: .70rem; letter-spacing: .085em; white-space: nowrap; }
+  .masthead-call { font-size: 1.05rem; padding: .34rem .8rem .4rem; }
+}
+@media (min-width: 62rem) {
+  .masthead-in { flex-wrap: nowrap; }
+  .wordmark-name, .wordmark-sub { white-space: nowrap; }
+}
+
 /* Mobile: a real menu instead of the nav wrapping onto two extra rows and
    eating a quarter of the fold. <details> so it works without JavaScript. */
 .navtoggle { display: none; }
@@ -182,7 +198,7 @@ em, .em { font-style: italic; }
   .navtoggle[open] > summary::after { border-bottom-color: transparent; }
   .masthead-in { padding-block: .7rem; gap: .5rem .7rem; flex-wrap: wrap; }
   .wordmark-name { font-size: 1.2rem; }
-  .wordmark-mark { height: 2rem; }
+  .wordmark-mark { height: 2.3rem; }
   .wordmark { gap: .45rem; }
   .nav { display: none; }
   .navtoggle[open] ~ .nav {
@@ -196,7 +212,6 @@ em, .em { font-style: italic; }
   .nav a[aria-current="page"] { border-bottom-color: var(--accent); }
   .masthead-call { font-size: .95rem; padding: .3rem .62rem .36rem; order: 2; }
   .navtoggle { order: 3; margin-left: 0; }
-  .proof-in { order: 5; }
 }
 @media (min-width: 52.01rem) { .nav { display: flex !important; } }
 @media (max-width: 34rem) {
@@ -206,38 +221,9 @@ em, .em { font-style: italic; }
   .masthead-call { font-size: .88rem; }
 }
 
-/* ------------------------------------------------------------ proof strip */
-/* The credential rides in the masthead's second row, beside the phone button
-   that already wraps there — so it costs no height of its own. It used to be
-   a separate band below the header, worth 61px on desktop. */
-.proof-in {
-  flex: 1 1 auto; margin: 0;
-  display: flex; flex-wrap: wrap; justify-content: flex-end;
-  align-items: baseline; gap: .2rem 1.35rem;
-  font-family: var(--mono); font-size: .6rem; letter-spacing: .09em;
-  text-transform: uppercase; color: rgba(242,237,228,.55);
-}
-.proof-in b { color: rgba(242,237,228,.92); font-weight: 400; }
-.proof-in a {
-  color: var(--accent-soft); text-decoration: none;
-  border-bottom: 1px solid transparent;
-}
-.proof-in a:hover { border-bottom-color: var(--accent-soft); }
-
-/* Phone: one scrollable row rather than three wrapped lines. This must sit
-   after the base .proof-in rules — an identical-specificity override earlier
-   in the file loses the cascade. */
-@media (max-width: 52rem) {
-  .proof-in {
-    flex: 1 0 100%; justify-content: flex-start;
-    flex-wrap: nowrap; overflow-x: auto; gap: 1.1rem;
-    padding-top: .5rem; margin-top: .35rem;
-    border-top: 1px solid rgba(242,237,228,.12);
-    scrollbar-width: none; -webkit-overflow-scrolling: touch;
-  }
-  .proof-in::-webkit-scrollbar { display: none; }
-  .proof-in > * { white-space: nowrap; flex: 0 0 auto; }
-}
+/* The proof strip that used to ride in the masthead's second row — 960 hrs /
+   20+ yrs / IACP / insured — moved to the About page, where those same four
+   claims already exist as the credentials list. The masthead is one row. */
 
 /* ------------------------------------------------------------ hero */
 /* The footage is 848x480. Anything that crops it loses either his head and the
@@ -272,6 +258,9 @@ em, .em { font-style: italic; }
   background: linear-gradient(to bottom,
               rgba(35,43,34,.72) 0%, rgba(35,43,34,.45) 55%, rgba(35,43,34,0) 100%);
 }
+/* The caption started at the centred wrap's gutter, which put it on
+   Benbulben. Pull it to the frame edge so it sits on open sky. */
+.hero-overlay .wrap { max-width: none; padding-inline: clamp(1rem, 2.4vw, 2.1rem); }
 .hero-overlay .display { color: var(--paper); }
 .hero-overlay h1.display { font-size: clamp(1.9rem, 5.2vw, 3.6rem); }
 .hero-tagline {
