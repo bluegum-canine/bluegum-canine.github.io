@@ -1,15 +1,25 @@
 <section class="hero">
-  <picture>
-    <source media="(max-width: 40rem)" srcset="/assets/img/hero-portrait.jpg">
-    <img class="hero-img" src="/assets/img/hero.jpg" width="1800" height="1012"
-         alt="A black and tan dog standing alert on a wet path, lead slack"
+  <div class="hero-media">
+    <!-- Video on wider screens; the portrait still on phones, where a
+         landscape clip crops badly and costs data. Both are replaced by the
+         still if the visitor asks for reduced motion. -->
+    <video class="hero-video" autoplay muted loop playsinline
+           poster="/assets/img/hero-poster.jpg" aria-hidden="true" tabindex="-1">
+      <source src="/assets/video/hero.mp4" type="video/mp4">
+    </video>
+    <img class="hero-img hero-still" src="/assets/img/hero-poster.jpg"
+         width="848" height="480"
+         alt="Mark Rabel walking a black labrador through a field below Benbulben, Co. Sligo"
          fetchpriority="high">
-  </picture>
+    <div class="hero-overlay">
+      <div class="wrap">
+        <h1 class="display">{{BRAND}}</h1>
+        <p class="hero-tagline">Calm, methodical training for dogs that have to
+          live in the real world.</p>
+      </div>
+    </div>
+  </div>
   <div class="wrap hero-body">
-    <h1 class="display">{{PERSON}}</h1>
-    <p class="hero-tagline">Calm, methodical training for dogs that have to
-      live in the real world.</p>
-
     <div class="hero-split">
       <div>
         <div class="tick"></div>
@@ -19,14 +29,16 @@
           expect &mdash; including the ones who have tried before.</p>
       </div>
       <div>
-        <p class="label">Where to start</p>
-        <p class="quiet" style="margin-top:0">We talk on the phone first, at no
-          charge, so I understand the problem before I arrive. No obligation,
-          and no sales pitch &mdash; if I am not the right person for your dog,
-          I will tell you.</p>
+        <p class="label">Start with an assessment</p>
+        <p class="quiet" style="margin-top:0">Every dog starts the same way: a
+          free assessment, in your own home, lasting about an hour. I watch the
+          dog, ask a great many questions, and tell you plainly what I think is
+          going on and what it would take to change it. No obligation, and no
+          sales pitch &mdash; if I am not the right person for your dog, I will
+          say so.</p>
         <div class="btn-row">
-          <a class="btn btn-ink" href="tel:{{PHONE_E164}}">Ring {{PHONE}}</a>
-          <a class="btn btn-ink" href="/contact.html">Get in touch</a>
+          <a class="btn btn-ink" href="tel:{{PHONE_E164}}">Book an assessment &mdash; {{PHONE}}</a>
+          <a class="btn btn-ink" href="/contact.html">Or send the details</a>
         </div>
       </div>
     </div>
@@ -34,6 +46,68 @@
 </section>
 
 <section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="label">Where most people start</p>
+      <h2 class="display">If you&rsquo;ve already tried</h2>
+      <p class="lede">Eleven problems account for most of the calls I get.
+        Most of the dogs I see are not a first attempt &mdash; their owners have
+        read the books, watched the videos, and very often worked with a trainer
+        already.</p>
+    </div>
+    <div class="prose">
+      <p>That is a good place to start from &mdash; it usually means the
+        groundwork is there and something specific is missing. Advice that
+        works beautifully for one dog can do very little for another.</p>
+    </div>
+
+    <div class="cards cards-3" style="margin-top:2.6rem">
+      <div class="card"><a href="/problems/reactive-to-other-dogs.html">
+        <h3>Barking at other dogs</h3>
+        <p>The most common call I get, and the most fixable.</p></a></div>
+      <div class="card"><a href="/problems/pulling-on-the-lead.html">
+        <h3>Pulling on the lead</h3>
+        <p>Walks that are a battle, not a pleasure.</p></a></div>
+      <div class="card"><a href="/problems/recall.html">
+        <h3>Poor recall</h3>
+        <p>A dog you dare not let off the lead.</p></a></div>
+      <div class="card"><a href="/problems/resource-guarding.html">
+        <h3>Guarding food and toys</h3>
+        <p>Growling over the bowl. Please do not punish it.</p></a></div>
+      <div class="card"><a href="/problems/nervous-around-people.html">
+        <h3>Nervous around people</h3>
+        <p>Wary, jumpy or difficult when visitors call.</p></a></div>
+      <div class="card"><a href="/problems/barking-at-visitors.html">
+        <h3>Barking at every visitor</h3>
+        <p>The doorbell goes and the house erupts.</p></a></div>
+      <div class="card"><a href="/problems/noise-fear.html">
+        <h3>Thunder and fireworks</h3>
+        <p>Shaking, hiding, and sometimes bolting.</p></a></div>
+      <div class="card"><a href="/problems/velcro-dogs.html">
+        <h3>The velcro dog</h3>
+        <p>Follows you room to room, cannot settle alone.</p></a></div>
+      <div class="card"><a href="/problems/car-travel.html">
+        <h3>Won&rsquo;t get in the car</h3>
+        <p>Planting at the boot, or travelling badly.</p></a></div>
+      <div class="card"><a href="/problems/destructive-behaviour.html">
+        <h3>Destructive at home</h3>
+        <p>Chewing, digging and damage while you are out.</p></a></div>
+      <div class="card"><a href="/problems/livestock-worrying.html">
+        <h3>Livestock worrying</h3>
+        <p>The most serious problem a dog can have out here.</p></a></div>
+    </div>
+
+    <div class="btn-row" style="margin-top:2.2rem">
+      <a class="btn btn-ink" href="/problems/">Read about any of them &rarr;</a>
+    </div>
+    <p class="callout">Every one of these is workable. And no dog is too old
+      to learn.</p>
+    <p class="prose quiet">Learning does not stop with age. Older dogs take on
+      new behaviour perfectly well, given the steps in order.</p>
+  </div>
+</section>
+
+<section class="section section-tint">
   <div class="wrap">
     <div class="section-head">
       <p class="label">The method</p>
@@ -49,10 +123,11 @@
       </div>
       <div class="principle">
         <p class="label label-muted">02</p>
-        <h2>The faster they learn,<br>the faster they forget</h2>
-        <p>Behaviour built on constant reward is acquired fastest and lost
-          fastest. Reliability comes from thinning the reward and proofing the
-          behaviour &mdash; not from more treats.</p>
+        <h2>Treat the cause,<br>not the symptom</h2>
+        <p>Stop a dog growling and the growling stops &mdash; but you have
+          removed the warning, not the fear. Work out <em>why</em> first. A plan
+          built on the wrong reason does not simply fail; it usually makes
+          things worse.</p>
       </div>
     </div>
     <p class="callout">A balanced assessment and training approach, built for
@@ -65,7 +140,7 @@
   </div>
 </section>
 
-<section class="section section-tint">
+<section class="section">
   <div class="wrap">
     <div class="section-head">
       <p class="label">Services offered</p>
@@ -98,49 +173,6 @@
   <img src="/assets/img/plate-hands.jpg" width="1200" height="800" loading="lazy"
        alt="A pair of hands resting gently on a dog's shoulder">
 </div>
-
-<section class="section">
-  <div class="wrap">
-    <div class="section-head">
-      <p class="label">Where most people start</p>
-      <h2 class="display">If you&rsquo;ve already tried</h2>
-      <p class="lede">Most of the dogs I see are not a first attempt. Their
-        owners have read the books, watched the videos, and very often worked
-        with a trainer already.</p>
-    </div>
-    <div class="prose">
-      <p>That is a good place to start from &mdash; it usually means the
-        groundwork is there and something specific is missing. Advice that
-        works beautifully for one dog can do very little for another.</p>
-    </div>
-
-    <div class="cards cards-3" style="margin-top:2.6rem">
-      <div class="card"><a href="/problems/pulling-on-the-lead.html">
-        <h3>Pulling on the lead</h3>
-        <p>Walks that are a battle, not a pleasure.</p></a></div>
-      <div class="card"><a href="/problems/nervous-around-people.html">
-        <h3>Nervous around people</h3>
-        <p>Shrinking, barking or hiding when visitors call.</p></a></div>
-      <div class="card"><a href="/problems/velcro-dogs.html">
-        <h3>The velcro dog</h3>
-        <p>Follows you room to room, cannot settle alone.</p></a></div>
-      <div class="card"><a href="/problems/recall.html">
-        <h3>Poor recall</h3>
-        <p>A dog you dare not let off the lead.</p></a></div>
-      <div class="card"><a href="/problems/destructive-behaviour.html">
-        <h3>Destructive at home</h3>
-        <p>Chewing, digging and damage while you are out.</p></a></div>
-      <div class="card"><a href="/problems/livestock-worrying.html">
-        <h3>Livestock worrying</h3>
-        <p>The most serious problem a dog can have out here.</p></a></div>
-    </div>
-
-    <p class="callout">Every one of these is workable. And no dog is too old
-      to learn.</p>
-    <p class="prose quiet">Learning does not stop with age. Older dogs take on
-      new behaviour perfectly well, given the steps in order.</p>
-  </div>
-</section>
 
 <section class="section section-tint">
   <div class="wrap">
@@ -175,14 +207,15 @@
     <div class="hero-split" style="border-top:0;margin-top:0;padding-top:0">
       <div>
         <p class="label">About</p>
-        <h2 class="display">Forty years,<br>then the paperwork</h2>
+        <h2 class="display">Twenty years,<br>then the paperwork</h2>
         <div class="prose" style="margin-top:1.4rem">
-          <p>Forty years working with dogs, formalised in December 2026 with a
+          <p>Twenty years working with dogs, formalised in December 2026 with a
             Master Trainer certificate from the Highland Canine School for Dog
-            Trainers, North Carolina &mdash; 960 hours.</p>
-          <p>Member of the International Association of Canine Professionals.
-            Ethical, science-led best practice, and an honest assessment
-            whether or not it wins me the work.</p>
+            Trainers, North Carolina &mdash; a six-month residential programme,
+            960 hours on campus.</p>
+          <p>Full member of the International Association of Canine
+            Professionals since 2025. Ethical, science-led best practice, and an
+            honest assessment whether or not it wins me the work.</p>
         </div>
         <div class="btn-row">
           <a class="btn btn-ink" href="/about.html">More about me &rarr;</a>
@@ -207,7 +240,6 @@
     <div class="btn-row">
       <a class="btn btn-solid" href="tel:{{PHONE_E164}}">Ring {{PHONE}}</a>
       <a class="btn" href="mailto:{{EMAIL}}">Email me</a>
-      <a class="btn" href="/classes.html">See upcoming classes</a>
     </div>
   </div>
 </section>

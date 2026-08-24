@@ -106,3 +106,17 @@ DNS at the registrar needs four `A` records for the apex, and a `CNAME` for
 @    A      185.199.111.153
 www  CNAME  squirreleater.github.io
 ```
+
+## Visibility
+
+The site is built with `PRIVATE = True` in `build.py`. That puts a `noindex`
+robots meta on all 20 pages, writes a `robots.txt` that refuses the scrapers
+while still letting real search engines crawl (they must be able to read the
+noindex), and skips `sitemap.xml` entirely. It is obscurity, not a lock —
+anyone with the link can open it.
+
+`CNAME` is parked as `CNAME.disabled` because `bluegumdogtraining.com` still
+points at GoDaddy. A live `CNAME` file makes GitHub redirect the `github.io`
+URL to the custom domain, which would take the site offline until the DNS is
+changed. To go live: point the domain's A records at GitHub Pages, rename the
+file back to `CNAME`, set `PRIVATE = False`, and rebuild.

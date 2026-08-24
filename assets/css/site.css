@@ -32,9 +32,12 @@
 :root {
   --paper:  #F2EDE4;
   --paper-2:#EAE3D5;
+  --paper-3:#E3DACA;   /* third surface, so sections separate by more than a hairline */
   --ink:    #2C2822;
   --moss:   #333D31;
+  --moss-deep:#232B22;  /* header and footer ground — brackets the paper */
   --accent: #A8642C;
+  --accent-soft:#C98A4E;
   --muted:  #857C70;
   --rule:   #CFC6B6;
 
@@ -61,8 +64,9 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--body);
-  font-size: clamp(1.06rem, 0.55vw + 0.95rem, 1.22rem);
-  line-height: 1.62;
+  font-size: clamp(1.02rem, 0.4vw + 0.94rem, 1.14rem);
+  line-height: 1.58;
+  font-variant-numeric: tabular-nums;
   text-rendering: optimizeLegibility;
 }
 
@@ -113,78 +117,181 @@ em, .em { font-style: italic; }
 .tick { width: 34px; height: 3px; background: var(--accent); margin: 0 0 1.4rem; }
 
 /* ------------------------------------------------------------ masthead */
-.masthead { border-bottom: 1px solid var(--rule); }
+/* Sticky, on the deep ground. Every competitor keeps a phone number and a
+   nav within reach the whole way down the page; this one used to lose both
+   the moment you scrolled. */
+.masthead {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--moss-deep);
+  border-bottom: 1px solid rgba(242,237,228,.14);
+}
 .masthead-in {
-  display: flex; align-items: center; gap: 1.5rem 2rem; flex-wrap: wrap;
-  padding-block: 1.15rem;
+  display: flex; align-items: center; gap: 1rem 2rem; flex-wrap: wrap;
+  padding-block: .85rem;
 }
 .wordmark { text-decoration: none; display: block; margin-right: auto; }
 .wordmark-name {
   display: block; font-family: var(--display); font-weight: 700;
-  text-transform: uppercase; color: var(--moss); line-height: .9;
-  font-size: 1.85rem; letter-spacing: .01em;
+  text-transform: uppercase; color: var(--paper); line-height: .9;
+  font-size: 1.6rem; letter-spacing: .015em;
 }
 .wordmark-sub {
-  display: block; font-family: var(--mono); font-size: .62rem;
-  letter-spacing: .2em; text-transform: uppercase; color: var(--muted);
-  margin-top: .32rem;
+  display: block; font-family: var(--mono); font-size: .58rem;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--accent-soft);
+  margin-top: .34rem;
 }
-.nav { display: flex; flex-wrap: wrap; gap: .5rem 1.4rem; }
+.nav { display: flex; flex-wrap: wrap; gap: .4rem 1.5rem; }
 .nav a {
-  font-family: var(--mono); font-size: .7rem; letter-spacing: .13em;
-  text-transform: uppercase; text-decoration: none; color: var(--ink);
-  padding-block: .2rem; border-bottom: 1.5px solid transparent;
+  font-family: var(--mono); font-size: .74rem; letter-spacing: .1em;
+  text-transform: uppercase; text-decoration: none;
+  color: rgba(242,237,228,.82);
+  padding-block: .3rem; border-bottom: 1.5px solid transparent;
 }
-.nav a:hover { color: var(--accent); }
-.nav a[aria-current="page"] { border-bottom-color: var(--accent);
-                              color: var(--moss); }
+.nav a:hover { color: var(--paper); border-bottom-color: var(--accent); }
+.nav a[aria-current="page"] { color: var(--paper); border-bottom-color: var(--accent); }
 .masthead-call {
-  font-family: var(--display); font-weight: 700; font-size: 1.3rem;
-  color: var(--paper); background: var(--moss); text-decoration: none;
-  padding: .42rem 1rem .5rem; letter-spacing: .02em; white-space: nowrap;
+  font-family: var(--display); font-weight: 700; font-size: 1.15rem;
+  color: var(--moss-deep); background: var(--paper); text-decoration: none;
+  padding: .38rem .95rem .44rem; letter-spacing: .02em; white-space: nowrap;
 }
 .masthead-call:hover { background: var(--accent); color: var(--paper); }
-@media (max-width: 46rem) {
-  .masthead-in { padding-block: .95rem; gap: .85rem 1.2rem; }
-  .wordmark-name { font-size: 1.5rem; }
-  .nav { order: 3; width: 100%; gap: .45rem 1.05rem; }
-  .nav a { font-size: .66rem; letter-spacing: .1em; }
+
+/* Mobile: a real menu instead of the nav wrapping onto two extra rows and
+   eating a quarter of the fold. <details> so it works without JavaScript. */
+.navtoggle { display: none; }
+@media (max-width: 52rem) {
+  .navtoggle { display: block; margin-left: auto; }
+  .navtoggle > summary {
+    list-style: none; cursor: pointer; display: flex; align-items: center;
+    gap: .45rem; font-family: var(--mono); font-size: .64rem; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--paper); padding: .4rem .15rem;
+  }
+  .navtoggle > summary::-webkit-details-marker { display: none; }
+  .navtoggle > summary::after {
+    content: ""; width: 15px; height: 9px; border-top: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+  }
+  .navtoggle[open] > summary::after { border-bottom-color: transparent; }
+  .masthead-in { padding-block: .7rem; gap: .5rem .7rem; flex-wrap: wrap; }
+  .wordmark-name { font-size: 1.2rem; }
+  .nav { display: none; }
+  .navtoggle[open] ~ .nav {
+    display: flex; order: 4; width: 100%; flex-direction: column; gap: 0;
+    padding-block: .4rem .8rem;
+  }
+  .nav a {
+    padding-block: .7rem; border-bottom: 1px solid rgba(242,237,228,.12);
+    font-size: .78rem;
+  }
+  .nav a[aria-current="page"] { border-bottom-color: var(--accent); }
+  .masthead-call { font-size: .95rem; padding: .3rem .62rem .36rem; order: 2; }
+  .navtoggle { order: 3; margin-left: 0; }
+  .proof-in { order: 5; }
 }
-/* On a phone the strapline costs a whole header row and repeats the line
-   sitting directly under the hero. Drop it and the call button comes up
-   alongside the name. */
+@media (min-width: 52.01rem) { .nav { display: flex !important; } }
 @media (max-width: 34rem) {
   .wordmark-sub { display: none; }
-  .wordmark-name { font-size: 1.35rem; }
-  .masthead-call { font-size: 1.1rem; padding: .34rem .8rem .4rem; }
+  .wordmark-name { font-size: 1.08rem; }
+  .navtoggle > summary { font-size: 0; gap: 0; }   /* icon only, the word costs a row */
+  .masthead-call { font-size: .88rem; }
+}
+
+/* ------------------------------------------------------------ proof strip */
+/* The credential rides in the masthead's second row, beside the phone button
+   that already wraps there — so it costs no height of its own. It used to be
+   a separate band below the header, worth 61px on desktop. */
+.proof-in {
+  flex: 1 1 auto; margin: 0;
+  display: flex; flex-wrap: wrap; justify-content: flex-end;
+  align-items: baseline; gap: .2rem 1.35rem;
+  font-family: var(--mono); font-size: .6rem; letter-spacing: .09em;
+  text-transform: uppercase; color: rgba(242,237,228,.55);
+}
+.proof-in b { color: rgba(242,237,228,.92); font-weight: 400; }
+.proof-in a {
+  color: var(--accent-soft); text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.proof-in a:hover { border-bottom-color: var(--accent-soft); }
+
+/* Phone: one scrollable row rather than three wrapped lines. This must sit
+   after the base .proof-in rules — an identical-specificity override earlier
+   in the file loses the cascade. */
+@media (max-width: 52rem) {
+  .proof-in {
+    flex: 1 0 100%; justify-content: flex-start;
+    flex-wrap: nowrap; overflow-x: auto; gap: 1.1rem;
+    padding-top: .5rem; margin-top: .35rem;
+    border-top: 1px solid rgba(242,237,228,.12);
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .proof-in::-webkit-scrollbar { display: none; }
+  .proof-in > * { white-space: nowrap; flex: 0 0 auto; }
 }
 
 /* ------------------------------------------------------------ hero */
+/* The footage is 848x480. Anything that crops it loses either his head and the
+   top of Benbulben, or the dog at the bottom of the frame — so nothing is
+   cropped: the media keeps its own aspect ratio and the caption sits on the
+   sky, which is the only empty part of the shot. */
 .hero { border-bottom: 1px solid var(--rule); }
-/* Capped against the viewport so the name and the claim are always in the
-   fold. An uncapped 16:9 band fills a laptop screen on its own and the
-   visitor sees a handsome photograph telling them nothing. */
-.hero-img { width: 100%; height: clamp(300px, 56vh, 640px);
-            object-fit: cover; object-position: 50% 34%; }
-@media (max-width: 40rem) {
-  .hero-img { height: clamp(240px, 42vh, 420px); }
+.hero-media {
+  position: relative; background: var(--moss-deep);
+  aspect-ratio: 848 / 480;
 }
-.hero-body { padding-block: clamp(2.2rem, 5vw, 3.6rem); }
+.hero-img, .hero-video {
+  width: 100%; height: 100%; object-fit: contain; display: block;
+}
+.hero-video { display: none; }
+.hero-still { display: block; }
+@media (min-width: 40rem) {
+  .hero-video { display: block; }
+  .hero-still { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-video { display: none !important; }
+  .hero-still { display: block !important; }
+}
+
+/* Caption on the sky, not over the man and the dog. */
+.hero-overlay {
+  position: absolute; inset: 0 0 auto 0;
+  padding-block: clamp(1rem, 2.5vw, 2rem);
+  background: linear-gradient(to bottom,
+              rgba(35,43,34,.72) 0%, rgba(35,43,34,.45) 55%, rgba(35,43,34,0) 100%);
+}
+.hero-overlay .display { color: var(--paper); }
+.hero-overlay h1.display { font-size: clamp(1.9rem, 5.2vw, 3.6rem); }
 .hero-tagline {
-  font-style: italic; font-size: clamp(1.25rem, 2.4vw, 1.85rem);
-  color: var(--ink); margin: 1rem 0 0; max-width: 24em; line-height: 1.35;
+  font-style: italic; font-size: clamp(.95rem, 1.5vw, 1.35rem);
+  color: rgba(242,237,228,.92); margin: .45rem 0 0; max-width: 30em;
+  line-height: 1.32;
 }
+
+/* On a phone the frame is only ~210px tall, so an overlaid caption covers the
+   whole picture. Below it instead, on the paper. */
+@media (max-width: 40rem) {
+  /* Let the box size to the picture and drop the dark ground, so the caption
+     flows out underneath onto the paper instead of sitting on moss. */
+  .hero-media { aspect-ratio: auto; background: var(--paper); }
+  .hero-img { height: auto; }
+  .hero-overlay {
+    position: static; background: none; padding-block: 1.4rem 0;
+  }
+  .hero-overlay .display { color: var(--moss); }
+  .hero-tagline { color: var(--ink); }
+}
+
 .hero-claim {
   font-style: italic; color: var(--moss);
-  font-size: clamp(1.5rem, 3vw, 2.15rem); line-height: 1.28;
-  margin: 0; max-width: 15em;
+  font-size: clamp(1.4rem, 2.8vw, 2rem); line-height: 1.3;
+  margin: 0; max-width: 16em;
 }
 .hero-sub { color: var(--muted); max-width: 30em; margin: 1rem 0 0; }
+.hero-body { padding-block: clamp(2rem, 4.5vw, 3.2rem); }
 .hero-split {
   display: grid; gap: clamp(1.6rem, 4vw, 3.2rem);
   grid-template-columns: 1fr; align-items: start;
-  padding-top: clamp(1.8rem, 4vw, 2.8rem); margin-top: clamp(1.8rem, 4vw, 2.8rem);
-  border-top: 1.5px solid var(--moss);
 }
 @media (min-width: 52rem) { .hero-split { grid-template-columns: 1.15fr 1fr; } }
 
@@ -257,6 +364,21 @@ em, .em { font-style: italic; }
 .band { margin-block: 0; }
 .band img { width: 100%; aspect-ratio: 21 / 7; object-fit: cover; }
 @media (max-width: 40rem) { .band img { aspect-ratio: 3 / 2; } }
+
+/* inset plate — for photographs whose subject fills the frame top to bottom.
+   The 21/7 band crop keeps a 400px strip out of the middle of an 800px photo,
+   which is fine for a detail shot like plate-hands but decapitates anything
+   with a figure in it. This shows the whole frame instead, and holds the width
+   down so an uncropped 3:2 doesn't swallow the page. */
+.plate { margin: 0 auto; max-width: 46rem; padding-inline: var(--gutter); }
+.plate img {
+  display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: contain;
+}
+.plate figcaption {
+  font-family: var(--mono); font-size: .66rem; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--muted); margin-top: .6rem;
+  text-align: center;
+}
 
 /* callout */
 .callout {
@@ -343,7 +465,16 @@ a.contact-value:hover { color: var(--accent); }
 .foot-name { font-size: clamp(2rem, 5vw, 2.9rem); margin-bottom: .5rem; }
 .foot-note { color: var(--muted); max-width: 24em; font-style: italic;
              margin: .8rem 0 1.4rem; }
-.foot-badge { width: 110px; height: auto; }
+.foot-badge { width: 180px; height: auto; }
+.foot-badges { display: flex; flex-direction: column; align-items: flex-start;
+               gap: 1rem; margin-top: 1.2rem; }
+.foot-badges a { display: inline-block; opacity: .92; transition: opacity .15s; }
+.foot-badges a:hover, .foot-badges a:focus-visible { opacity: 1; }
+.badges { display: flex; flex-wrap: wrap; align-items: center; gap: 2rem;
+          margin-top: 2.4rem; }
+.badges img { display: block; height: auto; max-width: 100%; }
+.badges a { display: inline-block; opacity: .92; transition: opacity .15s; }
+.badges a:hover, .badges a:focus-visible { opacity: 1; }
 .foot .label { margin-bottom: .8rem; }
 .plain { list-style: none; margin: 0; padding: 0; }
 .plain li { margin-bottom: .5rem; }

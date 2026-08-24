@@ -1,5 +1,50 @@
-User-agent: *
+# This site is unfinished and is not to appear in search results.
+# Every page also carries <meta name="robots" content="noindex">.
+
+# --- search engines: allowed to crawl, so they can read the noindex ---
+User-agent: Googlebot
+User-agent: Googlebot-Image
+User-agent: Bingbot
+User-agent: DuckDuckBot
+User-agent: Applebot
+User-agent: Slurp
+User-agent: Baiduspider
+User-agent: YandexBot
 Allow: /
 Disallow: /_src/
 
-Sitemap: https://bluegumdogtraining.com/sitemap.xml
+# --- link previews: allowed, so a shared link still shows a card ---
+User-agent: facebookexternalhit
+User-agent: WhatsApp
+User-agent: Twitterbot
+User-agent: LinkedInBot
+User-agent: TelegramBot
+User-agent: Slackbot-LinkExpanding
+Allow: /
+
+# --- everything else, including AI training and SEO scrapers ---
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: anthropic-ai
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+User-agent: PerplexityBot
+User-agent: Bytespider
+User-agent: Amazonbot
+User-agent: meta-externalagent
+User-agent: cohere-ai
+User-agent: Diffbot
+User-agent: ImagesiftBot
+User-agent: Omgilibot
+User-agent: YouBot
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: MJ12bot
+User-agent: DotBot
+User-agent: dataforseoBot
+User-agent: *
+Disallow: /

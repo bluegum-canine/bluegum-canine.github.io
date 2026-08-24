@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the Bluegum Dog Training site.
+"""Build the Bluegum Canine site.
 
 Content lives as body fragments in _src/. This script wraps each one in the
 shared shell (head, nav, footer, structured data) and writes the finished
@@ -8,12 +8,12 @@ HTML to the repo root, which is what GitHub Pages serves.
     python3 build.py
 
 No dependencies, no toolchain. Edit a fragment, run this, commit.
-The classes page is generated from data/events.json.
 """
 import hashlib
 import html
 import json
 import os
+import re
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(ROOT, "_src")
@@ -21,20 +21,45 @@ SRC = os.path.join(ROOT, "_src")
 # --------------------------------------------------------------- identity
 # One place to change the trading name. See online-presence-plan.md,
 # "Decision 0" — if the name changes, this is the edit.
-BRAND = "Bluegum Dog Training"
+BRAND = "Bluegum Canine"
 PERSON = "Mark Rabel"
+# TODO: move to https://bluegumcanine.com once registered, and redirect
+# bluegumdogtraining.com to it. Not changed yet — this must name a domain
+# that actually resolves, or canonical URLs and og:url break.
 DOMAIN = "https://bluegumdogtraining.com"
 PHONE_DISPLAY = "085 738 6848"
 PHONE_E164 = "+353857386848"
-EMAIL = "newmark22@gmail.com"          # TODO: mark@bluegumdogtraining.com
-AREA = "Co. Sligo & the North West"
+# This mailbox must exist and be monitored before the site goes public —
+# it is on every page, in the footer and in the structured data.
+EMAIL = "mark@bluegumdogtraining.com"   # TODO: mark@bluegumcanine.com
+AREA = "Sligo, the North West & beyond"
+
+# --------------------------------------------------------------- visibility
+# PRIVATE = True builds a site that is reachable by anyone holding the link
+# but is kept out of search results. It does three things: puts a noindex
+# robots meta on every page, writes a robots.txt that refuses the scrapers
+# outright while still letting the real search engines in (they have to be
+# able to crawl the page in order to READ the noindex — block them in
+# robots.txt and they can end up listing the bare URL instead), and skips
+# the sitemap, which exists purely to invite indexing.
+#
+# This is obscurity, not a lock. Anyone with the URL can open it.
+# Set to False on launch day and rebuild.
+PRIVATE = True
+
+# Where the site is served from. "" means the root of a domain — a custom
+# domain via CNAME, or a user page at squirreleater.github.io. A GitHub
+# *project* page lives under a subpath, so set this to
+# "/bluegum-dog-training" for that, or every root-relative /assets/... and
+# /services.html on the site 404s.
+BASE = ""
 
 NAV = [
     ("Services", "/services.html"),
     ("The method", "/method.html"),
     ("Common problems", "/problems/"),
+    ("Case studies", "/case-studies.html"),
     ("About", "/about.html"),
-    ("Classes", "/classes.html"),
     ("Contact", "/contact.html"),
 ]
 
@@ -57,11 +82,15 @@ LD = {
         "addressRegion": "Co. Sligo",
         "addressCountry": "IE",
     },
+    # Drive-time rings from Derrynaneane, not a fixed region. The counties are
+    # the one-to-one catchment; residential, assistance dog and assessment work
+    # is taken nationally, hence Ireland on the end.
     "areaServed": [
         {"@type": "AdministrativeArea", "name": n}
         for n in ["County Sligo", "County Leitrim", "County Roscommon",
-                  "County Mayo", "County Donegal"]
-    ],
+                  "County Longford", "County Mayo", "County Cavan",
+                  "County Westmeath", "County Galway", "County Donegal"]
+    ] + [{"@type": "Country", "name": "Ireland"}],
     "knowsAbout": [
         "dog training", "dog behaviour", "puppy training", "recall training",
         "lead pulling", "separation anxiety", "livestock worrying",
@@ -69,12 +98,77 @@ LD = {
     ],
 }
 
+# Search engines are deliberately ALLOWED here. They have to fetch the page
+# to see the noindex meta tag on it; a blanket Disallow would stop them
+# reading it, and Google will then sometimes list the bare URL anyway.
+# The bots that are refused outright are the ones that copy content rather
+# than index it. All of this is advisory — robots.txt is a request, not a
+# fence, and a crawler that ignores it will simply ignore it.
+PRIVATE_ROBOTS = """# This site is unfinished and is not to appear in search results.
+# Every page also carries <meta name="robots" content="noindex">.
+
+# --- search engines: allowed to crawl, so they can read the noindex ---
+User-agent: Googlebot
+User-agent: Googlebot-Image
+User-agent: Bingbot
+User-agent: DuckDuckBot
+User-agent: Applebot
+User-agent: Slurp
+User-agent: Baiduspider
+User-agent: YandexBot
+Allow: /
+Disallow: /_src/
+
+# --- link previews: allowed, so a shared link still shows a card ---
+User-agent: facebookexternalhit
+User-agent: WhatsApp
+User-agent: Twitterbot
+User-agent: LinkedInBot
+User-agent: TelegramBot
+User-agent: Slackbot-LinkExpanding
+Allow: /
+
+# --- everything else, including AI training and SEO scrapers ---
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: anthropic-ai
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+User-agent: PerplexityBot
+User-agent: Bytespider
+User-agent: Amazonbot
+User-agent: meta-externalagent
+User-agent: cohere-ai
+User-agent: Diffbot
+User-agent: ImagesiftBot
+User-agent: Omgilibot
+User-agent: YouBot
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: MJ12bot
+User-agent: DotBot
+User-agent: dataforseoBot
+User-agent: *
+Disallow: /
+"""
+
+ROBOTS_META = (
+    '<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, '
+    'noimageindex">\n'
+    '<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, '
+    'noimageindex">\n'
+) if PRIVATE else ""
+
 SHELL = """<!doctype html>
 <html lang="en-IE">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title}</title>
+{robotsmeta}<title>{title}</title>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{canonical}">
 <meta property="og:type" content="website">
@@ -98,13 +192,23 @@ SHELL = """<!doctype html>
 <header class="masthead">
   <div class="wrap masthead-in">
     <a class="wordmark" href="/">
-      <span class="wordmark-name">{person}</span>
-      <span class="wordmark-sub">Dog training &amp; behaviour</span>
+      <span class="wordmark-name">{brand}</span>
+      <span class="wordmark-sub">Behaviour practice &middot; Co. Sligo</span>
     </a>
+    <details class="navtoggle">
+      <summary aria-label="Menu">Menu</summary>
+    </details>
     <nav class="nav" aria-label="Main">
       {nav}
     </nav>
     <a class="masthead-call" href="tel:{phone_e164}">{phone_display}</a>
+    <p class="proof-in">
+      <span><b>960 hrs</b> Master Trainer</span>
+      <span><b>20+ yrs</b> with dogs</span>
+      <span><b>IACP</b> full member</span>
+      <span><b>Insured</b> care, custody &amp; control</span>
+      <a href="/qualification.html">What that covers &rarr;</a>
+    </p>
   </div>
 </header>
 
@@ -116,13 +220,22 @@ SHELL = """<!doctype html>
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <p class="display foot-name">{person}</p>
-        <p class="label">{brand}</p>
+        <p class="display foot-name">{brand}</p>
+        <p class="label">{person} &middot; Behaviour practice, Co. Sligo</p>
         <p class="foot-note">Calm, methodical training for dogs that have to
            live in the real world.</p>
-        <img class="foot-badge" src="/assets/img/iacp.png" alt="Member,
-             International Association of Canine Professionals" width="110"
-             height="133" loading="lazy">
+        <span class="foot-badges">
+          <a href="https://highlandcanine.com/" target="_blank" rel="noopener noreferrer"
+             aria-label="Highland Canine Training (opens in a new tab)"><img
+             class="foot-badge" src="/assets/img/highland.png"
+             alt="Highland Canine Training, LLC" width="180" height="37"
+             loading="lazy"></a>
+          <a href="https://iacpdogs.org/" target="_blank" rel="noopener noreferrer"
+             aria-label="International Association of Canine Professionals (opens in a new tab)"><img
+             class="foot-badge" src="/assets/img/iacp-logo.png"
+             alt="International Association of Canine Professionals" width="180"
+             height="54" loading="lazy"></a>
+        </span>
       </div>
       <div class="foot-col">
         <p class="label">Get in touch</p>
@@ -141,7 +254,7 @@ SHELL = """<!doctype html>
     </div>
     <p class="foot-fine">Fully insured &middot; a written plan after every
        consultation &middot; an honest assessment, always</p>
-    <p class="foot-fine">&copy; {year} {person}. Site built on
+    <p class="foot-fine">&copy; {year} {brand}. Site built on
        <a href="https://pages.github.com/">GitHub Pages</a>.</p>
   </div>
 </footer>
@@ -185,58 +298,22 @@ def render(fragment_path, out_path, title, desc, current=""):
         email=EMAIL, area=AREA, year=2026,
         ld=json.dumps(LD, separators=(",", ":")),
         nav=nav_html(current), footnav=footnav_html(),
-        cssv=CSSV, body=body,
+        cssv=CSSV, body=body, robotsmeta=ROBOTS_META,
     )
     # Let fragments use {{PHONE}}, {{EMAIL}} etc. without escaping headaches.
     for k, v in [("PHONE", PHONE_DISPLAY), ("PHONE_E164", PHONE_E164),
                  ("EMAIL", EMAIL), ("BRAND", BRAND), ("PERSON", PERSON),
                  ("AREA", AREA)]:
         page = page.replace("{{%s}}" % k, v)
+    if BASE:
+        page = re.sub(r'\b(href|src)="/(?!/)', r'\1="%s/' % BASE.rstrip("/"),
+                      page)
     full = os.path.join(ROOT, out_path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
     with open(full, "w") as f:
         f.write(page)
     return len(page)
 
-
-# --------------------------------------------------------------- classes page
-def build_classes():
-    """Render data/events.json into the classes fragment's slot."""
-    with open(os.path.join(ROOT, "data", "events.json")) as f:
-        events = json.load(f)
-    rows = []
-    for e in events:
-        state = e.get("state", "open")
-        cls = {"open": "is-open", "few": "is-few",
-               "full": "is-full"}.get(state, "is-open")
-        note = {"open": "Places available", "few": "Only a few places left",
-                "full": "Full — join the waiting list"}.get(state, "")
-        rows.append(
-            '<article class="event {cls}">\n'
-            '  <p class="event-date"><span class="event-day">{day}</span>'
-            '<span class="event-mon">{mon}</span></p>\n'
-            '  <div class="event-body">\n'
-            '    <h3>{title}</h3>\n'
-            '    <p class="event-meta">{when} &middot; {venue}</p>\n'
-            '    <p>{desc}</p>\n'
-            '    <p class="event-status">{note} &middot; {price}</p>\n'
-            '  </div>\n'
-            '</article>'.format(
-                cls=cls, day=e["day"], mon=e["month"],
-                title=html.escape(e["title"]), when=html.escape(e["when"]),
-                venue=html.escape(e["venue"]), desc=html.escape(e["desc"]),
-                note=note, price=html.escape(e.get("price", ""))))
-    if not rows:
-        rows = ['<p class="empty">No dates are up yet. Ring or email and '
-                'I will let you know as soon as the first classes are '
-                'scheduled.</p>']
-    src = os.path.join(SRC, "classes.html")
-    with open(src) as f:
-        frag = f.read()
-    tmp = os.path.join(SRC, "_classes.built.html")
-    with open(tmp, "w") as f:
-        f.write(frag.replace("<!--EVENTS-->", "\n".join(rows)))
-    return tmp
 
 
 # --------------------------------------------------------------- problems
@@ -259,6 +336,21 @@ PROBLEMS = [
     ("livestock-worrying", "Livestock worrying",
      "The most serious problem a dog can have in the west of Ireland. What "
      "the law says, and what training can and cannot do."),
+    ("reactive-to-other-dogs", "Barking and lunging at other dogs",
+     "Barking, lunging and aggression toward other dogs on the lead. Why "
+     "\u201creactive\u201d is not a diagnosis, and how the distance is rebuilt."),
+    ("resource-guarding", "Guarding food and toys",
+     "Growling over the food bowl or guarding toys. Why punishing the growl "
+     "is the worst thing you can do, and what works instead."),
+    ("barking-at-visitors", "Barking at every visitor",
+     "A dog that erupts at the doorbell. Alerting, excitement or fear \u2014 "
+     "they look alike and need different plans."),
+    ("noise-fear", "Frightened of thunder and fireworks",
+     "Shaking, hiding and bolting at storms and bangs. Why you cannot spoil a "
+     "frightened dog, and the work that has to be done out of season."),
+    ("car-travel", "Refuses to get in the car",
+     "A dog that plants itself at the boot or travels badly. Loading, travel "
+     "sickness and why the car has come to mean the vet."),
 ]
 
 
@@ -267,10 +359,10 @@ def main():
     CSSV = css_version()
     pages = [
         ("index.html", "index.html",
-         "%s — Dog Training & Behaviour, Co. Sligo" % PERSON,
-         "Calm, methodical dog training in Co. Sligo and the North West. "
-         "Obedience, recall, reactivity and residential training with "
-         "%s — Master Trainer, IACP member." % PERSON, ""),
+         "%s — Dog Training & Behaviour, Co. Sligo" % BRAND,
+         "Calm, methodical dog training from Co. Sligo across Connacht and the "
+         "midlands. Obedience, recall, reactivity and residential training with "
+         "%s, Master Trainer, full IACP member." % PERSON, ""),
         ("services.html", "services.html",
          "Services — %s" % BRAND,
          "Puppy foundations, everyday obedience, behaviour consultation, "
@@ -283,13 +375,33 @@ def main():
          "/method.html"),
         ("about.html", "about.html",
          "About %s — %s" % (PERSON, BRAND),
-         "Forty years working with dogs, formalised with a Master Trainer "
-         "certificate from Highland Canine, North Carolina. IACP member.",
+         "Twenty years working with dogs, formalised with a Master Trainer "
+         "certificate from Highland Canine, North Carolina - a six-month "
+         "residential programme, 960 hours. Full member of the "
+         "International Association of Canine Professionals since 2025.",
          "/about.html"),
+        ("qualification.html", "qualification.html",
+         "The qualification — %s" % BRAND,
+         "960 hours across 34 modules at Highland Canine, North Carolina — a "
+         "six-month residential Master Trainer programme. The full module list, "
+         "published.",
+         "/qualification.html"),
+        ("training-tools.html", "training-tools.html",
+         "Training tools — %s" % BRAND,
+         "Prong and electronic collars are sold with no instruction. Fit, "
+         "timing, level, and the order things have to be taught in — or how to "
+         "get the same result without them.",
+         "/training-tools.html"),
+        ("case-studies.html", "case-studies.html",
+         "Case studies — %s" % BRAND,
+         "Written-up cases: the presenting problem, what was actually causing "
+         "it, the plan, how long it took and where the dog ended up.",
+         "/case-studies.html"),
         ("contact.html", "contact.html",
          "Contact — %s" % BRAND,
-         "Ring, message on WhatsApp or email. Serving Co. Sligo, Leitrim, "
-         "Roscommon, Mayo and Donegal.",
+         "Ring, message on WhatsApp or email. Sligo, Leitrim, Roscommon, "
+         "Longford, Mayo and Cavan as standard — residential and assistance "
+         "dog work taken from anywhere in Ireland.",
          "/contact.html"),
         ("problems/index.html", "problems/index.html",
          "Common problems — %s" % BRAND,
@@ -303,13 +415,6 @@ def main():
         total += render(os.path.join(SRC, src_name), out, title, desc, cur)
         print("  %-28s %s" % (out, title[:52]))
 
-    # classes, generated from the events file
-    tmp = build_classes()
-    total += render(tmp, "classes.html", "Classes & events — %s" % BRAND,
-                    "Upcoming group classes, workshops and events in Co. Sligo "
-                    "and the North West.", "/classes.html")
-    os.remove(tmp)
-    print("  %-28s %s" % ("classes.html", "Classes & events"))
 
     # one page per problem
     for slug, title, desc in PROBLEMS:
@@ -320,19 +425,29 @@ def main():
 
     # robots + sitemap
     urls = ["/", "/services.html", "/method.html", "/about.html",
-            "/classes.html", "/contact.html", "/problems/"] + \
+            "/qualification.html", "/training-tools.html", "/case-studies.html",
+            "/contact.html", "/problems/"] + \
            ["/problems/%s.html" % s for s, _, _ in PROBLEMS]
-    with open(os.path.join(ROOT, "sitemap.xml"), "w") as f:
-        f.write('<?xml version="1.0" encoding="UTF-8"?>\n'
-                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
-        for u in urls:
-            f.write("  <url><loc>%s%s</loc></url>\n" % (DOMAIN, u))
-        f.write("</urlset>\n")
-    with open(os.path.join(ROOT, "robots.txt"), "w") as f:
-        f.write("User-agent: *\nAllow: /\nDisallow: /_src/\n\n"
-                "Sitemap: %s/sitemap.xml\n" % DOMAIN)
+    sitemap = os.path.join(ROOT, "sitemap.xml")
+    if PRIVATE:
+        # A sitemap is an invitation. Don't publish one, and remove any
+        # left behind by an earlier public build.
+        if os.path.exists(sitemap):
+            os.remove(sitemap)
+        with open(os.path.join(ROOT, "robots.txt"), "w") as f:
+            f.write(PRIVATE_ROBOTS)
+    else:
+        with open(sitemap, "w") as f:
+            f.write('<?xml version="1.0" encoding="UTF-8"?>\n'
+                    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
+            for u in urls:
+                f.write("  <url><loc>%s%s</loc></url>\n" % (DOMAIN, u))
+            f.write("</urlset>\n")
+        with open(os.path.join(ROOT, "robots.txt"), "w") as f:
+            f.write("User-agent: *\nAllow: /\nDisallow: /_src/\n\n"
+                    "Sitemap: %s/sitemap.xml\n" % DOMAIN)
 
-    print("\n%d pages, %.1f KB of HTML" % (len(pages) + 1 + len(PROBLEMS),
+    print("\n%d pages, %.1f KB of HTML" % (len(pages) + len(PROBLEMS),
                                            total / 1024.0))
 
 
