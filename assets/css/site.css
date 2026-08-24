@@ -242,12 +242,14 @@ em, .em { font-style: italic; }
 .hero-img, .hero-video {
   width: 100%; height: 100%; object-fit: contain; display: block;
 }
-.hero-video { display: none; }
-.hero-still { display: block; }
-@media (min-width: 40rem) {
-  .hero-video { display: block; }
-  .hero-still { display: none; }
-}
+/* The video plays on phones too. It used to be desktop-only, on the grounds
+   that a landscape clip crops badly on a narrow screen — but the hero is
+   object-fit: contain at the clip's own 848/480 now, so nothing is cropped
+   anywhere and that reason has expired. The still remains the fallback for
+   reduced-motion, and the poster covers iOS Low Power Mode, which refuses
+   autoplay however the markup is written. */
+.hero-video { display: block; }
+.hero-still { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .hero-video { display: none !important; }
   .hero-still { display: block !important; }
@@ -274,7 +276,9 @@ em, .em { font-style: italic; }
   /* Let the box size to the picture and drop the dark ground, so the caption
      flows out underneath onto the paper instead of sitting on moss. */
   .hero-media { aspect-ratio: auto; background: var(--paper); }
-  .hero-img { height: auto; }
+  /* Both of them: the box no longer has an aspect-ratio to fill, so a
+     height of 100% would collapse the video to nothing. */
+  .hero-img, .hero-video { height: auto; aspect-ratio: 848 / 480; }
   .hero-overlay {
     position: static; background: none; padding-block: 1.4rem 0;
   }

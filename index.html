@@ -20,7 +20,7 @@
 <link rel="icon" href="/assets/img/favicon.png" type="image/png">
 <link rel="preload" href="/assets/fonts/BigShoulders-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/CrimsonPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/site.css?v=6c69defc">
+<link rel="stylesheet" href="/assets/css/site.css?v=34061bb1">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","additionalType":"https://schema.org/ProfessionalService","name":"Bluegum Canine","founder":{"@type":"Person","name":"Mark Rabel"},"url":"https://bluegum-canine.github.io","telephone":"+353857386848","email":"mark@bluegumdogtraining.com","image":"https://bluegum-canine.github.io/assets/img/og.jpg","priceRange":"\u20ac\u20ac","address":{"@type":"PostalAddress","addressRegion":"Co. Sligo","addressCountry":"IE"},"areaServed":[{"@type":"AdministrativeArea","name":"County Sligo"},{"@type":"AdministrativeArea","name":"County Leitrim"},{"@type":"AdministrativeArea","name":"County Roscommon"},{"@type":"AdministrativeArea","name":"County Longford"},{"@type":"AdministrativeArea","name":"County Mayo"},{"@type":"AdministrativeArea","name":"County Cavan"},{"@type":"AdministrativeArea","name":"County Westmeath"},{"@type":"AdministrativeArea","name":"County Galway"},{"@type":"AdministrativeArea","name":"County Donegal"},{"@type":"Country","name":"Ireland"}],"knowsAbout":["dog training","dog behaviour","puppy training","recall training","lead pulling","separation anxiety","livestock worrying","residential dog training"]}</script>
 </head>
 <body>
@@ -57,9 +57,10 @@
 <main id="main">
 <section class="hero">
   <div class="hero-media">
-    <!-- Video on wider screens; the portrait still on phones, where a
-         landscape clip crops badly and costs data. Both are replaced by the
-         still if the visitor asks for reduced motion. -->
+    <!-- Plays on phones as well as desktop. muted + playsinline are both
+         required for iOS to autoplay at all, and must be in the markup rather
+         than set later by script. The still replaces it for reduced motion;
+         the poster covers iOS Low Power Mode, which blocks autoplay outright. -->
     <video class="hero-video" autoplay muted loop playsinline
            poster="/assets/img/hero-poster.jpg" aria-hidden="true" tabindex="-1">
       <source src="/assets/video/hero.mp4" type="video/mp4">
@@ -68,6 +69,26 @@
          width="848" height="480"
          alt="Mark Rabel walking a black labrador through a field below Benbulben, Co. Sligo"
          fetchpriority="high">
+    <script>
+    /* Autoplay is a request, not a guarantee. iOS refuses it outright in Low
+       Power Mode and in Low Data Mode, and some browsers refuse it until the
+       visitor has interacted with the site before. Without this the hero
+       would sit on a frozen poster with no way to start it, because the
+       video deliberately carries no controls. If the request is refused, show
+       the still photograph instead — it is the same frame. */
+    (function () {
+      var v = document.querySelector('.hero-video');
+      if (!v) return;
+      var p = v.play();
+      if (p && p.catch) {
+        p.catch(function () {
+          v.style.display = 'none';
+          var img = document.querySelector('.hero-still');
+          if (img) img.style.display = 'block';
+        });
+      }
+    })();
+    </script>
     <div class="hero-overlay">
       <div class="wrap">
         <h1 class="display">Bluegum Canine</h1>
