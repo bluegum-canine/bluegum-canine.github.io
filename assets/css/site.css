@@ -404,6 +404,13 @@ main > .section:first-child h2.display { font-size: clamp(1.7rem, 4vw, 2.5rem); 
   text-align: center;
 }
 
+/* portrait variant of the plate. A 3:2 frame either crops an upright photo
+   through the head or letterboxes it into a thin strip in the middle; this
+   gives it its own ratio and holds the width in so it does not tower over
+   the text column it sits in. */
+.plate-tall { max-width: 24rem; }
+.plate-tall img { aspect-ratio: 3 / 4; object-fit: cover; }
+
 /* callout */
 .callout {
   border-left: 3px solid var(--accent); padding: .2rem 0 .2rem 1.3rem;

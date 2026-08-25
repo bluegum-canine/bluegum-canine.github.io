@@ -415,8 +415,9 @@ def main():
         # position without naming hardware. Re-add this entry to publish it.
         ("case-studies.html", "case-studies.html",
          "Case studies — %s" % BRAND,
-         "Written-up cases: the presenting problem, what was actually causing "
-         "it, the plan, how long it took and where the dog ended up.",
+         "Chloe: a stray Doodle with a bite history who would not take food or "
+         "play, taught a reliable off-lead recall in seven days. The presenting "
+         "problem, the plan, how long it took and where the dog ended up.",
          "/case-studies.html"),
         ("contact.html", "contact.html",
          "Contact — %s" % BRAND,
