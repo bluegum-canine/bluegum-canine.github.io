@@ -37,14 +37,11 @@ PHONE_E164 = "+353857386848"
 # wa.me takes digits only — a leading + makes the link fail rather than
 # open a chat, so the WhatsApp link uses this and tel: uses the E.164 form.
 PHONE_WA = PHONE_E164.lstrip("+")
-# This mailbox must exist and be monitored before the site goes public —
-# it is on every page, in the footer and in the structured data.
-# On every page and in the structured data. NOTE: the mailbox does not exist
-# yet — the domain was registered on 24 Aug and email has still to be set up,
-# so anything sent here currently bounces. It must be live and monitored
-# before the site is shown to an actual customer. Matches the primary domain
-# deliberately; mark@bluegumcanine.com would work too but mixing the two
-# across the site invites mistyping.
+# On every page, in the footer and in the LocalBusiness structured data.
+# Live since 25 Aug 2026 — Titan mailbox at Blacknight, sending and receiving
+# both tested. MX, SPF and DKIM are published; DMARC is still to be added.
+# Matches the primary domain deliberately: mark@bluegumcanine.com would work
+# too, but mixing the two across the site invites mistyping.
 EMAIL = "mark@bluegumcanine.ie"
 AREA = "Sligo, the North West & beyond"
 
