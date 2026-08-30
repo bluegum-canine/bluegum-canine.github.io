@@ -410,6 +410,12 @@ def main():
         # collars directly, which invites an argument the business does not
         # need; the balanced-approach section on the method page carries the
         # position without naming hardware. Re-add this entry to publish it.
+        ("assistance-dogs.html", "assistance-dogs.html",
+         "Assistance dogs and the law — %s" % BRAND,
+         "What the law actually says about assistance dogs in Ireland and the "
+         "UK, compared with the American rules. Access rights, owner-trained "
+         "dogs, and which kinds of dog the legislation names.",
+         "/assistance-dogs.html"),
         ("case-studies.html", "case-studies.html",
          "Case studies — %s" % BRAND,
          "Chloe: a stray Doodle with a bite history who would not take food or "
@@ -444,7 +450,8 @@ def main():
 
     # robots + sitemap
     urls = ["/", "/services.html", "/method.html", "/about.html",
-            "/qualification.html", "/case-studies.html",
+            "/qualification.html", "/assistance-dogs.html",
+            "/case-studies.html",
             "/contact.html", "/problems/"] + \
            ["/problems/%s.html" % s for s, _, _ in PROBLEMS]
     sitemap = os.path.join(ROOT, "sitemap.xml")

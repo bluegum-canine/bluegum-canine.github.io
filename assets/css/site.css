@@ -531,3 +531,56 @@ a.contact-value:hover { color: var(--accent-text); }
    on every page with room for it. */
 .foot-seal { display: block; width: 7.5rem; height: auto; margin: 0 0 1.1rem; }
 @media (max-width: 40rem) { .foot-seal { width: 6rem; } }
+
+/* ------------------------------------------------- reference tables */
+/* The assistance dog page is the one reference document on the site:
+   dense, compared across three jurisdictions, and read rather than
+   skimmed. These are the only tables here, so the rules are scoped to
+   .tbl rather than styling bare <table> for a page that may never exist. */
+.tbl-scroll { overflow-x: auto; border: 1px solid var(--rule);
+              background: var(--paper); margin: 1.6rem 0 .9rem; }
+.tbl { border-collapse: collapse; width: 100%; min-width: 46rem;
+       font-size: .87rem; line-height: 1.5; }
+.tbl th, .tbl td { text-align: left; vertical-align: top;
+                   padding: .78rem .9rem; border-bottom: 1px solid var(--rule); }
+.tbl thead th {
+  font-family: var(--mono); font-size: .64rem; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--moss); white-space: nowrap;
+  border-bottom: 1.5px solid var(--moss);
+}
+.tbl thead th span {
+  display: block; font-size: .95em; letter-spacing: .05em;
+  text-transform: none; color: var(--muted); margin-top: .15rem;
+}
+.tbl tbody th { font-weight: 600; color: var(--ink); width: 24%;
+                min-width: 10rem; background: var(--paper-2); }
+.tbl td { color: var(--muted); }
+.tbl td strong { color: var(--ink); font-weight: 600; }
+.tbl tbody tr:last-child th, .tbl tbody tr:last-child td { border-bottom: 0; }
+.tbl .cite { font-family: var(--mono); font-size: .76em;
+             color: var(--accent-text); display: block; margin-top: .2rem; }
+
+/* Three-state marker: named in statute, general duty only, not addressed.
+   The shape carries the meaning as well as the fill, so it survives being
+   printed in black and white — which is how a page like this gets used. */
+.mk { display: inline-block; width: .66rem; height: .66rem; border-radius: 50%;
+      border: 1.5px solid var(--moss); margin-right: .45rem; flex: none; }
+.mk-full { background: var(--moss); }
+.mk-half { background: linear-gradient(90deg, var(--moss) 0 50%, transparent 50%); }
+.mk-none { background: transparent; opacity: .5; }
+.mk-row { display: flex; align-items: baseline; }
+.key { display: flex; flex-wrap: wrap; gap: .5rem 1.6rem; font-size: .84rem;
+       color: var(--muted); background: var(--paper-2);
+       border: 1px solid var(--rule); padding: .8rem .9rem; }
+.key span { display: inline-flex; align-items: baseline; }
+.section-tint .tbl-scroll, .section-tint .key { background: var(--paper); }
+.tbl-note { color: var(--muted); font-size: .87rem; max-width: 44em;
+            margin: 1.1rem 0 0; }
+
+/* Jurisdiction cards carry a list rather than the single paragraph .card
+   was built for. */
+.card ul { margin: .6rem 0 0; padding-left: 1.05rem; color: var(--muted);
+           font-size: .93em; }
+.card li { margin-bottom: .5rem; }
+.card li:last-child { margin-bottom: 0; }
+.card li b { color: var(--ink); font-weight: 600; }
