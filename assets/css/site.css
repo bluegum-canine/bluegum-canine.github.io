@@ -577,6 +577,11 @@ a.contact-value:hover { color: var(--accent-text); }
 .tbl-note { color: var(--muted); font-size: .87rem; max-width: 44em;
             margin: 1.1rem 0 0; }
 
+/* Five columns rather than four. The row header has to give up some width
+   or the short status labels wrap in one column and not the next. */
+.tbl-matrix { min-width: 52rem; }
+.tbl-matrix tbody th { width: 17%; min-width: 8.5rem; }
+
 /* Jurisdiction cards carry a list rather than the single paragraph .card
    was built for. */
 .card ul { margin: .6rem 0 0; padding-left: 1.05rem; color: var(--muted);
