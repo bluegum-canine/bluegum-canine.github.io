@@ -385,7 +385,8 @@ def main():
         ("services.html", "services.html",
          "Services — %s" % BRAND,
          "Puppy foundations, everyday obedience, behaviour consultation, "
-         "one-to-one sessions and residential board-and-train in Co. Sligo.",
+         "one-to-one sessions, residential board-and-train and assistance dog "
+         "work, from Co. Sligo.",
          "/services.html"),
         ("method.html", "method.html",
          "The method — %s" % BRAND,
