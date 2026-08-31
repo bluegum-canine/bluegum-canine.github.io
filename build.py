@@ -9,6 +9,7 @@ HTML to the repo root, which is what GitHub Pages serves.
 
 No dependencies, no toolchain. Edit a fragment, run this, commit.
 """
+import datetime
 import hashlib
 import html
 import json
@@ -44,6 +45,66 @@ PHONE_WA = PHONE_E164.lstrip("+")
 # too, but mixing the two across the site invites mistyping.
 EMAIL = "mark@bluegumcanine.ie"
 AREA = "Sligo, the North West & beyond"
+
+# --------------------------------------------------------------- milestones
+# The site was written from a future vantage point: it described the Master
+# Trainer certificate as held and the practice as trading, neither of which
+# was true when the pages were first built. Rather than write it twice and
+# have to remember to come back, the two dates are declared here and the
+# copy around them is chosen at build time. Rebuild after either date and
+# the tense corrects itself.
+#
+# Anything asserting the certificate or a client caseload goes through a
+# token below — do not hard-code either claim into a fragment.
+CERT_DATE = datetime.date(2026, 12, 18)   # last day at Highland Canine
+CLIENTS_FROM = datetime.date(2027, 1, 1)  # first client dogs taken
+
+TODAY = datetime.date.today()
+QUALIFIED = TODAY >= CERT_DATE
+TRADING = TODAY >= CLIENTS_FROM
+
+# About — the paragraph that carries the programme itself.
+CERT_STATUS = (
+    "The certificate is dated 18 December 2026."
+    if QUALIFIED else
+    "I am on the programme as I write this. It finishes on 18 December 2026 "
+    "and the certificate is dated that day, so if you are reading this before "
+    "then, take it as work in progress rather than a qualification I already "
+    "hold."
+)
+# Homepage — the short About panel.
+CERT_SENTENCE = (
+    "Master Trainer, Highland Canine School for Dog Trainers, North Carolina "
+    "&mdash; six months residential, 960 hours on campus, completed December "
+    "2026."
+    if QUALIFIED else
+    "Currently completing the Master Trainer Program at the Highland Canine "
+    "School for Dog Trainers, North Carolina &mdash; six months residential, "
+    "960 hours on campus, finishing December 2026."
+)
+# About — the credentials list.
+CERT_TAG = ("Completed December 2026." if QUALIFIED
+            else "In progress; finishes 18 December 2026.")
+# Qualification page — the opening statement of fact.
+CERT_LINE = (
+    "Certificate dated 18 December 2026."
+    if QUALIFIED else
+    "The programme finishes on 18 December 2026 and the certificate is dated "
+    "that day. Until then this is what I am in the middle of, not something "
+    "I have finished."
+)
+# Homepage — the eleven problems. Before the first client dogs there is no
+# caseload to generalise from, so the claim is about the trade, not about me.
+CALLS = ("Eleven problems account for most of the calls I get."
+         if TRADING else
+         "Eleven problems account for most of what people ring a dog trainer "
+         "about.")
+DOGS = ("Most of the dogs I see are not a first attempt"
+        if TRADING else
+        "Most dogs that reach a trainer are not a first attempt")
+# Used in the meta descriptions, which cannot carry markup.
+CRED_META = ("a Master Trainer and full IACP member" if QUALIFIED
+             else "a full IACP member completing a Master Trainer programme")
 
 # --------------------------------------------------------------- visibility
 # PRIVATE = True builds a site that is reachable by anyone holding the link
@@ -322,7 +383,10 @@ def render(fragment_path, out_path, title, desc, current=""):
     for k, v in [("PHONE", PHONE_DISPLAY), ("PHONE_E164", PHONE_E164),
                  ("PHONE_WA", PHONE_WA),
                  ("EMAIL", EMAIL), ("BRAND", BRAND), ("PERSON", PERSON),
-                 ("AREA", AREA)]:
+                 ("AREA", AREA),
+                 ("CERT_STATUS", CERT_STATUS), ("CERT_SENTENCE", CERT_SENTENCE),
+                 ("CERT_TAG", CERT_TAG), ("CERT_LINE", CERT_LINE),
+                 ("CALLS", CALLS), ("DOGS", DOGS)]:
         page = page.replace("{{%s}}" % k, v)
     if BASE:
         page = re.sub(r'\b(href|src)="/(?!/)', r'\1="%s/' % BASE.rstrip("/"),
@@ -381,7 +445,7 @@ def main():
          "%s — Dog Training & Behaviour, Co. Sligo" % BRAND,
          "Calm, methodical dog training from Co. Sligo across Connacht and the "
          "midlands. Obedience, recall, reactivity and residential training with "
-         "%s, a Master Trainer and full IACP member." % PERSON, ""),
+         "%s, %s." % (PERSON, CRED_META), ""),
         ("services.html", "services.html",
          "Services — %s" % BRAND,
          "Puppy foundations, everyday obedience, behaviour consultation, "
@@ -395,10 +459,12 @@ def main():
          "/method.html"),
         ("about.html", "about.html",
          "About %s — %s" % (PERSON, BRAND),
-         "Twenty years working with dogs, formalised with a Master Trainer "
-         "certificate from Highland Canine, North Carolina - a six-month "
-         "residential programme, 960 hours. Full member of the "
-         "International Association of Canine Professionals since 2025.",
+         "Twenty years working with dogs, and %s at the Highland Canine "
+         "School for Dog Trainers, North Carolina - a six-month residential "
+         "programme, 960 hours. Full member of the International Association "
+         "of Canine Professionals since 2025."
+         % ("a Master Trainer certificate" if QUALIFIED
+            else "completing the Master Trainer Program"),
          "/about.html"),
         ("qualification.html", "qualification.html",
          "The qualification — %s" % BRAND,
