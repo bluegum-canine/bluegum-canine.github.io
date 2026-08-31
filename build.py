@@ -161,7 +161,8 @@ LD = {
         "addressRegion": "Co. Sligo",
         "addressCountry": "IE",
     },
-    # Drive-time rings from the base near Boyle, not a fixed region. The counties are
+    # Drive-time rings from the base in south Co. Sligo near Boyle, not a
+    # fixed region. See the rings on the About page. The counties are
     # the one-to-one catchment; residential, assistance dog and assessment work
     # is taken nationally, hence Ireland on the end.
     "areaServed": [
