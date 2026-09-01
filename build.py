@@ -93,11 +93,11 @@ CERT_LINE = (
     "that day. Until then this is what I am in the middle of, not something "
     "I have finished."
 )
-# Homepage — the eleven problems. Before the first client dogs there is no
+# Homepage — the twelve problems. Before the first client dogs there is no
 # caseload to generalise from, so the claim is about the trade, not about me.
-CALLS = ("Eleven problems account for most of the calls I get."
+CALLS = ("Twelve problems account for most of the calls I get."
          if TRADING else
-         "Eleven problems account for most of what people ring a dog trainer "
+         "Twelve problems account for most of what people ring a dog trainer "
          "about.")
 DOGS = ("Most of the dogs I see are not a first attempt"
         if TRADING else
@@ -435,6 +435,10 @@ PROBLEMS = [
     ("car-travel", "Refuses to get in the car",
      "A dog that plants itself at the boot or travels badly. Loading, travel "
      "sickness and why the car has come to mean the vet."),
+    ("repetitive-behaviour", "Spinning, pacing and chasing shadows",
+     "Spinning, tail chasing, fence pacing, shadow and light chasing and lick "
+     "sores \u2014 where compulsive behaviour comes from, and why never to use "
+     "a laser pen with a dog."),
 ]
 
 
