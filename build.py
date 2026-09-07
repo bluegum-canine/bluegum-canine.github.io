@@ -45,6 +45,13 @@ PHONE_WA = PHONE_E164.lstrip("+")
 # too, but mixing the two across the site invites mistyping.
 EMAIL = "mark@bluegumcanine.ie"
 AREA = "Sligo, the North West & beyond"
+# Registered Business Name number, CRO Ireland — granted 7 Sep 2026 under the
+# Registration of Business Names Act 1963. Goes in the footer of every page and
+# in the structured data, the way a company number would. See the business plan,
+# "05 Compliance, Legal and Insurance". Registering the name is not registering
+# the business: sole-trader registration with Revenue (Form TR1) is separate and
+# is not claimed anywhere on the site.
+RBN = "792747"
 
 # --------------------------------------------------------------- milestones
 # The site was written from a future vantage point: it described the Master
@@ -151,6 +158,11 @@ LD = {
     "additionalType": "https://schema.org/ProfessionalService",
     "name": BRAND,
     "founder": {"@type": "Person", "name": PERSON},
+    "identifier": {
+        "@type": "PropertyValue",
+        "name": "Registered Business Name (CRO Ireland)",
+        "value": RBN,
+    },
     "url": SITE,
     "telephone": PHONE_E164,
     "email": EMAIL,
@@ -334,6 +346,8 @@ SHELL = """<!doctype html>
     </div>
     <p class="foot-fine">Fully insured &middot; a written plan after every
        consultation &middot; an honest assessment, always</p>
+    <p class="foot-fine">{brand} is a registered business name, no. {rbn},
+       Companies Registration Office, Ireland.</p>
     <p class="foot-fine">&copy; {year} {brand}. Site built on
        <a href="https://pages.github.com/">GitHub Pages</a>.</p>
   </div>
@@ -375,7 +389,7 @@ def render(fragment_path, out_path, title, desc, current=""):
         canonical=SITE + "/" + out_path.replace("index.html", "").lstrip("/"),
         brand=BRAND, person=PERSON, domain=SITE,
         phone_e164=PHONE_E164, phone_display=PHONE_DISPLAY,
-        email=EMAIL, area=AREA, year=2026,
+        email=EMAIL, area=AREA, year=2026, rbn=RBN,
         ld=json.dumps(LD, separators=(",", ":")),
         nav=nav_html(current), footnav=footnav_html(),
         cssv=CSSV, body=body, robotsmeta=ROBOTS_META,
