@@ -52,6 +52,15 @@ AREA = "Sligo, the North West & beyond"
 # the business: sole-trader registration with Revenue (Form TR1) is separate and
 # is not claimed anywhere on the site.
 RBN = "792747"
+# The registered person's true name, exactly as it reads on the CRO certificate
+# for RBN 792747. Section 14 of the Registration of Business Names Act 1963
+# requires an individual trading under a registered business name to state their
+# true name on business letters, trade catalogues, circulars and order forms,
+# and the CRO applies the same to websites. This is deliberately NOT PERSON:
+# PERSON stays first-name-only for the brand voice and feeds the masthead, the
+# About title, the meta descriptions and the founder field. Only the statutory
+# footer line uses the full name, so the two can differ without a ripple.
+PROPRIETOR = "Mark Rabel"
 
 # --------------------------------------------------------------- milestones
 # The site was written from a future vantage point: it described the Master
@@ -347,7 +356,7 @@ SHELL = """<!doctype html>
     <p class="foot-fine">Fully insured &middot; a written plan after every
        consultation &middot; an honest assessment, always</p>
     <p class="foot-fine">{brand} is a registered business name, no. {rbn},
-       Companies Registration Office, Ireland.</p>
+       Companies Registration Office, Ireland. Proprietor: {proprietor}.</p>
     <p class="foot-fine">&copy; {year} {brand}. Site built on
        <a href="https://pages.github.com/">GitHub Pages</a>.</p>
   </div>
@@ -389,7 +398,7 @@ def render(fragment_path, out_path, title, desc, current=""):
         canonical=SITE + "/" + out_path.replace("index.html", "").lstrip("/"),
         brand=BRAND, person=PERSON, domain=SITE,
         phone_e164=PHONE_E164, phone_display=PHONE_DISPLAY,
-        email=EMAIL, area=AREA, year=2026, rbn=RBN,
+        email=EMAIL, area=AREA, year=2026, rbn=RBN, proprietor=PROPRIETOR,
         ld=json.dumps(LD, separators=(",", ":")),
         nav=nav_html(current), footnav=footnav_html(),
         cssv=CSSV, body=body, robotsmeta=ROBOTS_META,
