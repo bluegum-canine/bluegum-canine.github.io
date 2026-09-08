@@ -24,8 +24,11 @@ SRC = os.path.join(ROOT, "_src")
 # "Decision 0" — if the name changes, this is the edit.
 BRAND = "Bluegum Canine"
 # First name only, deliberately. The business is the brand; the person is the
-# face. This feeds the footer, the About title, the meta descriptions and the
-# LocalBusiness founder field, so it is the single edit for all of them.
+# face. This feeds the About title, the meta descriptions, the {{PERSON}} page
+# placeholder and the LocalBusiness founder field, so it is the single edit for
+# all of them. It is deliberately NOT in the footer strapline any more — the
+# name was doing no work beside "Behaviour practice, Co. Sligo" when it already
+# appears in the email address, on the About page and in the credentials.
 PERSON = "Mark"
 # The domain the business will launch on. Registered at Blacknight on
 # 24 Aug 2026 along with bluegumcanine.com, which forwards here — .ie leads
@@ -322,7 +325,7 @@ SHELL = """<!doctype html>
         <img class="foot-seal" src="/assets/img/logo/seal-moss.png"
              width="454" height="454" loading="lazy" alt="">
         <p class="display foot-name">{brand}</p>
-        <p class="label">{person} &middot; Behaviour practice, Co. Sligo</p>
+        <p class="label">Behaviour practice &middot; Co. Sligo</p>
         <p class="foot-note">Calm, methodical training for dogs that have to
            live in the real world.</p>
         <span class="foot-badges">
@@ -396,7 +399,7 @@ def render(fragment_path, out_path, title, desc, current=""):
     page = SHELL.format(
         title=html.escape(title), desc=html.escape(desc),
         canonical=SITE + "/" + out_path.replace("index.html", "").lstrip("/"),
-        brand=BRAND, person=PERSON, domain=SITE,
+        brand=BRAND, domain=SITE,
         phone_e164=PHONE_E164, phone_display=PHONE_DISPLAY,
         email=EMAIL, area=AREA, year=2026, rbn=RBN, proprietor=PROPRIETOR,
         ld=json.dumps(LD, separators=(",", ":")),
