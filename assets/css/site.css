@@ -532,6 +532,39 @@ a.contact-value:hover { color: var(--accent-text); }
 .foot-seal { display: block; width: 7.5rem; height: auto; margin: 0 0 1.1rem; }
 @media (max-width: 40rem) { .foot-seal { width: 6rem; } }
 
+/* ------------------------------------------------------ figure row */
+/* Three official statistics on the livestock page. A .tbl would work but it
+   carries min-width: 46rem and scrolls sideways on a phone, which is the
+   wrong trade for three numbers that exist to be glanced at. This stacks
+   instead. The source line is not optional — an unattributed statistic on a
+   trading site is worth less than no statistic. */
+.figs {
+  display: grid; gap: 1px; background: var(--rule);
+  border: 1px solid var(--rule); margin: 1.7rem 0 1rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 40rem) { .figs { grid-template-columns: repeat(3, 1fr); } }
+.figs > div { background: var(--paper-2); padding: 1.1rem 1.1rem 1rem; }
+.section-tint .figs > div { background: var(--paper); }
+.figs b {
+  display: block; font-family: var(--display); font-weight: 500;
+  font-size: clamp(1.85rem, 4.6vw, 2.5rem); line-height: 1;
+  letter-spacing: -.015em; color: var(--ink);
+  font-variation-settings: "opsz" 96;
+}
+.figs span {
+  display: block; margin-top: .5rem; font-size: .88rem;
+  line-height: 1.45; color: var(--muted);
+}
+/* Same treatment as .tbl td strong — the emphasis has to darken to read as
+   emphasis. Left at the inherited muted it is only heavier, which at this
+   size is not a difference the eye picks up. */
+.figs span strong { color: var(--ink); font-weight: 600; }
+.figs-src {
+  font-family: var(--mono); font-size: .7rem; letter-spacing: .06em;
+  color: var(--accent-text); margin: 0 0 1.6rem; line-height: 1.6;
+}
+
 /* ------------------------------------------------- reference tables */
 /* The assistance dog page is the one reference document on the site:
    dense, compared across three jurisdictions, and read rather than
