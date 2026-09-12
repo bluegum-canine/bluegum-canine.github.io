@@ -490,7 +490,8 @@ def main():
         ("method.html", "method.html",
          "The method — %s" % BRAND,
          "Freedom through obedience. A balanced, bespoke approach built on "
-         "four steps: teaching, reinforcing, proofing and maintaining.",
+         "five steps: assessment first, then teaching, reinforcing, proofing "
+         "and maintaining.",
          "/method.html"),
         ("about.html", "about.html",
          "About %s — %s" % (PERSON, BRAND),
