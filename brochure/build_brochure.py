@@ -219,7 +219,7 @@ def build():
     b.heading("Bluegum Canine", 23, gap=5)
     b.label("Behaviour practice", color=MUTED, gap=12)
     b.rule()
-    b.body("Twenty years with dogs, formalised in December 2026 with a Master "
+    b.body("Forty-four years with dogs, formalised in December 2026 with a Master "
            "Trainer certificate from the Highland Canine School for Dog "
            "Trainers, North Carolina — a six-month residential programme, "
            "960 hours across 34 modules.")

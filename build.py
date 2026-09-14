@@ -495,7 +495,7 @@ def main():
          "/method.html"),
         ("about.html", "about.html",
          "About %s — %s" % (PERSON, BRAND),
-         "Twenty years working with dogs, and %s at the Highland Canine "
+         "Forty-four years of dogs, and %s at the Highland Canine "
          "School for Dog Trainers, North Carolina - a six-month residential "
          "programme, 960 hours. Full member of the International Association "
          "of Canine Professionals since 2025."
