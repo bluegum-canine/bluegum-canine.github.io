@@ -522,8 +522,10 @@ def main():
         ("case-studies.html", "case-studies.html",
          "Case studies — %s" % BRAND,
          "Chloe: a stray Doodle with a bite history who would not take food or "
-         "play, taught a reliable off-lead recall in seven days. The presenting "
-         "problem, the plan, how long it took and where the dog ended up.",
+         "play, taught a reliable off-lead recall in seven days. Stevie: a "
+         "Great Dane made fear aggressive by missed socialisation, growling at "
+         "anyone who caught her eye. The problem, the plan, how long it took "
+         "and where each dog ended up.",
          "/case-studies.html"),
         ("contact.html", "contact.html",
          "Contact — %s" % BRAND,

@@ -431,6 +431,16 @@ main > .section:first-child h2.display { font-size: clamp(1.7rem, 4vw, 2.5rem); 
 .plate-tall { max-width: 24rem; }
 .plate-tall img { aspect-ratio: 3 / 4; object-fit: cover; }
 
+/* video variant of the plate. A phone clip is 9:16, taller than even the
+   portrait plate, so it gets its own ratio and a tighter width so it does not
+   tower over the text column. Controls stay on: this one is evidence rather
+   than decoration, and a visitor should be able to stop it. */
+.plate-video { max-width: 21rem; }
+.plate-video video {
+  display: block; width: 100%; height: auto; aspect-ratio: 9 / 16;
+  background: var(--ink);
+}
+
 /* squarer variant of the plate. A group shot whose subjects fill the frame
    corner to corner has nothing spare to give a 3:2 crop, and sits inside the
    contained plate with a strip of paper down either side. */
