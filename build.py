@@ -394,7 +394,8 @@ def nav_html(current):
 
 def footnav_html():
     return "\n          ".join(
-        '<li><a href="%s">%s</a></li>' % (h, l) for l, h in NAV)
+        '<li><a href="%s">%s</a></li>' % (h, l)
+        for l, h in NAV + [("Policies", "/policies.html")])
 
 
 def render(fragment_path, out_path, title, desc, current=""):
@@ -533,6 +534,12 @@ def main():
          "Longford, Mayo and Cavan as standard — residential and assistance "
          "dog work taken from anywhere in Ireland.",
          "/contact.html"),
+        ("policies.html", "policies.html",
+         "Policies — %s" % BRAND,
+         "Who I work with, vaccinations, payment by bank transfer, Revolut or "
+         "cheque, cancellations, refunds, the 14-day right to cancel, and what "
+         "I do and do not guarantee.",
+         "/policies.html"),
         ("problems/index.html", "problems/index.html",
          "Common problems — %s" % BRAND,
          "Pulling on the lead, poor recall, nervousness, velcro dogs, "
@@ -557,7 +564,7 @@ def main():
     urls = ["/", "/services.html", "/method.html", "/about.html",
             "/qualification.html", "/assistance-dogs.html",
             "/case-studies.html",
-            "/contact.html", "/problems/"] + \
+            "/contact.html", "/policies.html", "/problems/"] + \
            ["/problems/%s.html" % s for s, _, _ in PROBLEMS]
     sitemap = os.path.join(ROOT, "sitemap.xml")
     if PRIVATE:
