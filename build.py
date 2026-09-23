@@ -64,6 +64,9 @@ RBN = "792747"
 # About title, the meta descriptions and the founder field. Only the statutory
 # footer line uses the full name, so the two can differ without a ripple.
 PROPRIETOR = "Mark Rabel"
+# Shown at the foot of privacy.html. Change it whenever that page's substance
+# changes, not on every rebuild.
+PRIVACY_UPDATED = "23 September 2026"
 
 # --------------------------------------------------------------- milestones
 # The site was written from a future vantage point: it described the Master
@@ -364,7 +367,8 @@ SHELL = """<!doctype html>
     <p class="foot-fine">Fully insured &middot; a written plan after every
        consultation &middot; an honest assessment, always</p>
     <p class="foot-fine">{brand} is a registered business name, no. {rbn},
-       Companies Registration Office, Ireland. Proprietor: {proprietor}.</p>
+       Companies Registration Office, Ireland. Proprietor: {proprietor}.
+       <a href="/privacy.html">Privacy policy</a>.</p>
     <p class="foot-fine">&copy; {year} {brand}. Site built on
        <a href="https://pages.github.com/">GitHub Pages</a>.</p>
   </div>
@@ -396,7 +400,8 @@ def nav_html(current):
 def footnav_html():
     return "\n          ".join(
         '<li><a href="%s">%s</a></li>' % (h, l)
-        for l, h in NAV + [("Policies", "/policies.html")])
+        for l, h in NAV + [("Policies", "/policies.html"),
+                           ("Privacy", "/privacy.html")])
 
 
 def render(fragment_path, out_path, title, desc, current=""):
@@ -419,7 +424,9 @@ def render(fragment_path, out_path, title, desc, current=""):
                  ("AREA", AREA),
                  ("CERT_STATUS", CERT_STATUS), ("CERT_SENTENCE", CERT_SENTENCE),
                  ("CERT_TAG", CERT_TAG), ("CERT_LINE", CERT_LINE),
-                 ("CALLS", CALLS), ("DOGS", DOGS)]:
+                 ("CALLS", CALLS), ("DOGS", DOGS),
+                 ("PROPRIETOR", PROPRIETOR), ("RBN", RBN),
+                 ("PRIVACY_UPDATED", PRIVACY_UPDATED)]:
         page = page.replace("{{%s}}" % k, v)
     if BASE:
         page = re.sub(r'\b(href|src)="/(?!/)', r'\1="%s/' % BASE.rstrip("/"),
@@ -542,6 +549,12 @@ def main():
          "cheque, cancellations, refunds, the 14-day right to cancel, and what "
          "I do and do not guarantee.",
          "/policies.html"),
+        ("privacy.html", "privacy.html",
+         "Privacy — %s" % BRAND,
+         "What information I keep about you and your dog, why, who sees it, "
+         "how long it is kept, and your rights under Irish data protection "
+         "law. No cookies, no tracking.",
+         "/privacy.html"),
         ("problems/index.html", "problems/index.html",
          "Common problems — %s" % BRAND,
          "Pulling on the lead, poor recall, nervousness, velcro dogs, "
@@ -566,7 +579,7 @@ def main():
     urls = ["/", "/services.html", "/method.html", "/about.html",
             "/qualification.html", "/assistance-dogs.html",
             "/case-studies.html",
-            "/contact.html", "/policies.html", "/problems/"] + \
+            "/contact.html", "/policies.html", "/privacy.html", "/problems/"] + \
            ["/problems/%s.html" % s for s, _, _ in PROBLEMS]
     sitemap = os.path.join(ROOT, "sitemap.xml")
     if PRIVATE:
