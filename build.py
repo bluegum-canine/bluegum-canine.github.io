@@ -187,8 +187,9 @@ LD = {
     },
     # Drive-time rings from the base in south Co. Sligo near Boyle, not a
     # fixed region. See the rings on the About page. The counties are
-    # the one-to-one catchment; residential, assistance dog and assessment work
-    # is taken nationally, hence Ireland on the end.
+    # the one-to-one catchment; residential and assessment work is taken
+    # nationally, hence Ireland on the end. (Assistance dog work paused until
+    # 2028 at the earliest — Decisions D-32.)
     "areaServed": [
         {"@type": "AdministrativeArea", "name": n}
         for n in ["County Sligo", "County Leitrim", "County Roscommon",
@@ -484,9 +485,10 @@ def main():
          "%s, %s." % (PERSON, CRED_META), ""),
         ("services.html", "services.html",
          "Services — %s" % BRAND,
-         "Puppy foundations, everyday obedience, behaviour consultation, "
-         "one-to-one sessions, residential board-and-train and assistance dog "
-         "work, from Co. Sligo.",
+         "Puppy foundations, everyday obedience, six-week group classes, "
+         "behaviour consultation, one-to-one sessions and residential "
+         "board-and-train, from Co. Sligo. Assistance dog work planned from "
+         "2028.",
          "/services.html"),
         ("method.html", "method.html",
          "The method — %s" % BRAND,
@@ -531,8 +533,8 @@ def main():
         ("contact.html", "contact.html",
          "Contact — %s" % BRAND,
          "Ring, message on WhatsApp or email. Sligo, Leitrim, Roscommon, "
-         "Longford, Mayo and Cavan as standard — residential and assistance "
-         "dog work taken from anywhere in Ireland.",
+         "Longford, Mayo and Cavan as standard — residential training taken "
+         "from anywhere in Ireland.",
          "/contact.html"),
         ("policies.html", "policies.html",
          "Policies — %s" % BRAND,
