@@ -358,6 +358,12 @@ SHELL = """<!doctype html>
         </ul>
       </div>
       <div class="foot-col">
+        <p class="label">Services</p>
+        <ul class="plain">
+          {footservices}
+        </ul>
+      </div>
+      <div class="foot-col">
         <p class="label">Pages</p>
         <ul class="plain">
           {footnav}
@@ -415,8 +421,17 @@ def render(fragment_path, out_path, title, desc, current=""):
         email=EMAIL, area=AREA, year=2026, rbn=RBN, proprietor=PROPRIETOR,
         ld=json.dumps(LD, separators=(",", ":")),
         nav=nav_html(current), footnav=footnav_html(),
+        footservices="\n          ".join(
+            '<li><a href="/services/%s.html">%s</a></li>' % (s, short)
+            for s, _, short, _ in SERVICES),
         cssv=CSSV, body=body, robotsmeta=ROBOTS_META,
     )
+    page = page.replace("{{SERVICES_NAV}}", subnav_html(
+        [(s, short) for s, _, short, _ in SERVICES], "/services/", out_path,
+        "Services"))
+    page = page.replace("{{CASES_NAV}}", subnav_html(
+        [(s, name) for s, name, _, _ in CASES], "/case-studies/", out_path,
+        "Case studies"))
     # Let fragments use {{PHONE}}, {{EMAIL}} etc. without escaping headaches.
     for k, v in [("PHONE", PHONE_DISPLAY), ("PHONE_E164", PHONE_E164),
                  ("PHONE_WA", PHONE_WA),
@@ -437,6 +452,64 @@ def render(fragment_path, out_path, title, desc, current=""):
         f.write(page)
     return len(page)
 
+
+
+# --------------------------------------------------------------- services
+# One page per service under /services/, with services.html as the hub. The
+# order here is the order of the sub-navigation strip and the footer list, and
+# should match the numbering on the hub. Fragments are in _src/services/.
+SERVICES = [
+    ("puppy-training", "Puppy foundations", "Puppy training",
+     "Puppy training in your own home in Co. Sligo, from the week your puppy "
+     "comes home: socialisation, handling, lead work and toilet training. "
+     "\u20ac150 a session."),
+    ("obedience", "Everyday obedience", "Obedience",
+     "Recall, settle, loose lead and stopping on command, proofed around real "
+     "distraction. One-to-one dog obedience training from Co. Sligo, \u20ac150 "
+     "a session."),
+    ("group-classes", "Group classes", "Group classes",
+     "Six-week small-group obedience classes in the Sligo area, \u20ac175. "
+     "Recall, settle, loose lead and stopping on command, around other dogs."),
+    ("behaviour-consultation", "Behaviour consultation",
+     "Behaviour consultation",
+     "Reactivity, aggression, anxiety and livestock worrying: an assessment "
+     "where the behaviour happens and a written plan, \u20ac350. Co. Sligo and "
+     "the North West."),
+    ("one-to-one", "One-to-one sessions", "One-to-one",
+     "Private dog training at your home across Sligo, Leitrim, Roscommon, "
+     "Longford, Mayo and Cavan. \u20ac150 a session, or \u20ac765 for six."),
+    ("residential-training", "Residential training", "Residential",
+     "Residential board-and-train in Co. Sligo: three weeks on lead, three "
+     "weeks off lead, or six weeks together. From \u20ac2,100, with a handover "
+     "lesson and two follow-ups."),
+    ("assistance-dog-training", "Assistance dog work", "Assistance dogs",
+     "Assistance dog training is planned from 2028. Questions about "
+     "assistance dogs, candidate dogs and public access are welcome now."),
+]
+
+# --------------------------------------------------------------- case studies
+# One page per case under /case-studies/, with case-studies.html as the hub.
+CASES = [
+    ("chloe", "Chloe", "Chloe: the dog with nothing to pay her with",
+     "A stray Doodle with a bite history who would not take food or play, "
+     "taught a reliable off-lead recall in seven days. The problem, the plan, "
+     "how long it took and what this case does not claim."),
+    ("stevie", "Stevie", "Stevie: the window that closed too early",
+     "A two-year-old Great Dane made fearful by missed socialisation, growling "
+     "at anyone who caught her eye. Several weeks of desensitisation, most of "
+     "it done by her owner."),
+]
+
+
+def subnav_html(items, base, current, label):
+    """The strip of sibling links at the top of each service or case page."""
+    links = []
+    for slug, short in items:
+        href = "%s%s.html" % (base, slug)
+        cur = ' aria-current="page"' if current == href.lstrip("/") else ""
+        links.append('<a href="%s"%s>%s</a>' % (href, cur, short))
+    return ('<nav class="subnav" aria-label="%s">\n      %s\n    </nav>'
+            % (label, "\n      ".join(links)))
 
 
 # --------------------------------------------------------------- problems
@@ -568,6 +641,18 @@ def main():
         print("  %-28s %s" % (out, title[:52]))
 
 
+    for slug, title, _, desc in SERVICES:
+        out = "services/%s.html" % slug
+        total += render(os.path.join(SRC, out), out,
+                        "%s — %s" % (title, BRAND), desc, "/services.html")
+        print("  %-28s %s" % (out, title))
+
+    for slug, _, title, desc in CASES:
+        out = "case-studies/%s.html" % slug
+        total += render(os.path.join(SRC, out), out,
+                        "%s — %s" % (title, BRAND), desc, "/case-studies.html")
+        print("  %-28s %s" % (out, title[:52]))
+
     # one page per problem
     for slug, title, desc in PROBLEMS:
         total += render(os.path.join(SRC, "problems", slug + ".html"),
@@ -580,7 +665,9 @@ def main():
             "/qualification.html", "/assistance-dogs.html",
             "/case-studies.html",
             "/contact.html", "/policies.html", "/privacy.html", "/problems/"] + \
-           ["/problems/%s.html" % s for s, _, _ in PROBLEMS]
+           ["/problems/%s.html" % s for s, _, _ in PROBLEMS] + \
+           ["/services/%s.html" % s for s, _, _, _ in SERVICES] + \
+           ["/case-studies/%s.html" % s for s, _, _, _ in CASES]
     sitemap = os.path.join(ROOT, "sitemap.xml")
     if PRIVATE:
         # A sitemap is an invitation. Don't publish one, and remove any
@@ -600,7 +687,8 @@ def main():
             f.write("User-agent: *\nAllow: /\nDisallow: /_src/\n\n"
                     "Sitemap: %s/sitemap.xml\n" % DOMAIN)
 
-    print("\n%d pages, %.1f KB of HTML" % (len(pages) + len(PROBLEMS),
+    print("\n%d pages, %.1f KB of HTML" % (len(pages) + len(PROBLEMS)
+                                          + len(SERVICES) + len(CASES),
                                            total / 1024.0))
 
 

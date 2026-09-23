@@ -335,7 +335,7 @@ em, .em { font-style: italic; }
    gets a shorter run-up and a slightly smaller title. */
 main > .section:first-child { padding-top: clamp(1.9rem, 4vw, 3.1rem); }
 main > .section:first-child .section-head { margin-bottom: clamp(1.4rem, 3vw, 2.2rem); }
-main > .section:first-child h2.display { font-size: clamp(1.7rem, 4vw, 2.5rem); }
+main > .section:first-child :is(h1, h2).display { font-size: clamp(1.7rem, 4vw, 2.5rem); }
 .section-head .lede { margin: 1rem 0 0; max-width: 34em; color: var(--ink); }
 .section-tint { background: var(--paper-2); }
 
@@ -520,7 +520,7 @@ a.contact-value:hover { color: var(--accent-text); }
         padding-block: clamp(2.6rem, 6vw, 4rem) 2rem; margin-top: 0; }
 .foot-grid { display: grid; gap: 2.2rem; grid-template-columns: 1fr; }
 @media (min-width: 46rem) {
-  .foot-grid { grid-template-columns: 2fr 1fr 1fr; gap: 3rem; }
+  .foot-grid { grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
 }
 .foot-name { font-size: clamp(1.7rem, 4vw, 2.3rem); margin-bottom: .5rem; }
 .foot-note { color: var(--muted); max-width: 24em; font-style: italic;
@@ -645,3 +645,22 @@ a.contact-value:hover { color: var(--accent-text); }
 .card li { margin-bottom: .5rem; }
 .card li:last-child { margin-bottom: 0; }
 .card li b { color: var(--ink); font-weight: 600; }
+
+/* Sibling links at the top of each service and case-study page. Wraps rather
+   than scrolls, so every option is visible on a phone without a menu. */
+.subnav { display: flex; flex-wrap: wrap; gap: .4rem .5rem;
+          margin: 0 0 2rem; font-family: var(--mono); font-size: .7rem;
+          letter-spacing: .08em; text-transform: uppercase; }
+.subnav a { text-decoration: none; color: var(--muted);
+            border: 1px solid var(--rule); border-radius: 999px;
+            padding: .35rem .75rem; }
+.subnav a:hover { color: var(--accent-text); }
+.subnav a[aria-current="page"] { color: var(--paper); background: var(--moss);
+                                 border-color: var(--moss); }
+
+/* "On this page" jump links at the top of the long reference pages. */
+.toc { margin: 0 0 2.2rem; }
+.toc ol { margin: .5rem 0 0; padding-left: 1.2rem; columns: 2 16rem;
+          column-gap: 2rem; }
+.toc li { margin: 0 0 .3rem; break-inside: avoid; }
+[id] { scroll-margin-top: 5.5rem; }
