@@ -191,8 +191,8 @@ LD = {
     # Drive-time rings from the base in south Co. Sligo near Boyle, not a
     # fixed region. See the rings on the About page. The counties are
     # the one-to-one catchment; residential and assessment work is taken
-    # nationally, hence Ireland on the end. (Assistance dog work paused until
-    # 2028 at the earliest — Decisions D-32.)
+    # nationally, hence Ireland on the end. (Assistance dog training is not
+    # offered — information and guidance only, by email.)
     "areaServed": [
         {"@type": "AdministrativeArea", "name": n}
         for n in ["County Sligo", "County Leitrim", "County Roscommon",
@@ -424,11 +424,11 @@ def render(fragment_path, out_path, title, desc, current=""):
         nav=nav_html(current), footnav=footnav_html(),
         footservices="\n          ".join(
             '<li><a href="/services/%s.html">%s</a></li>' % (s, short)
-            for s, _, short, _ in SERVICES),
+            for s, _, short, _ in OFFERED),
         cssv=CSSV, body=body, robotsmeta=ROBOTS_META,
     )
     page = page.replace("{{SERVICES_NAV}}", subnav_html(
-        [(s, short) for s, _, short, _ in SERVICES], "/services/", out_path,
+        [(s, short) for s, _, short, _ in OFFERED], "/services/", out_path,
         "Services"))
     page = page.replace("{{ABOUT_NAV}}", subnav_html(
         ABOUT_PAGES, "/", out_path, "About"))
@@ -494,10 +494,16 @@ SERVICES = [
      "Residential board-and-train in Co. Sligo: three weeks on lead, three "
      "weeks off lead, or six weeks together. From \u20ac2,100, with a handover "
      "lesson and two follow-ups."),
-    ("assistance-dog-training", "Assistance dog work", "Assistance dogs",
-     "Assistance dog training is planned from 2028. Questions about "
-     "assistance dogs, candidate dogs and public access are welcome now."),
+    ("assistance-dog-training", "Assistance dogs", "Assistance dogs",
+     "Assistance dog training is not a service offered. Information and "
+     "gentle guidance on assistance dogs, candidate dogs and public access, "
+     "by email."),
 ]
+
+# Assistance dogs keeps its page under /services/ so links to it still work,
+# but it is not a service offered, so it stays out of the Services strip and
+# the footer's Services list.
+OFFERED = [s for s in SERVICES if s[0] != "assistance-dog-training"]
 
 # --------------------------------------------------------------- case studies
 # One page per case under /case-studies/, with case-studies.html as the hub.
@@ -579,8 +585,7 @@ def main():
          "Services — %s" % BRAND,
          "Puppy foundations, everyday obedience, six-week group classes, "
          "behaviour consultation, one-to-one sessions and residential "
-         "board-and-train, from Co. Sligo. Assistance dog work planned from "
-         "2028.",
+         "board-and-train, from Co. Sligo.",
          "/services.html"),
         ("method.html", "method.html",
          "The method — %s" % BRAND,
