@@ -642,6 +642,26 @@ a.contact-value:hover { color: var(--accent-text); }
 .tbl-matrix { min-width: 52rem; }
 .tbl-matrix tbody th { width: 17%; min-width: 8.5rem; }
 
+/* On a phone the tables are wider than the screen and scroll sideways in
+   their box. Without help a reader sees only the Ireland column and never
+   learns the rest is there, and once they do swipe the row labels go with
+   it. So below the width where the tables fit: a hint above each one, and
+   the row-label column pinned while the jurisdictions scroll under it. */
+.tbl-hint { display: none; }
+@media (max-width: 58rem) {
+  .tbl-hint { display: block; font-family: var(--mono); font-size: .66rem;
+              letter-spacing: .1em; text-transform: uppercase;
+              color: var(--accent-text); margin: 1.6rem 0 -1rem; }
+  .tbl tbody th, .tbl thead th:first-child {
+    position: sticky; left: 0; z-index: 1;
+    box-shadow: 1px 0 0 var(--rule), 6px 0 8px -6px rgba(0,0,0,.18);
+  }
+  .tbl thead th:first-child { background: var(--paper); }
+  .tbl tbody th { width: 8rem; min-width: 8rem; }
+  .tbl-matrix tbody th { width: 7.5rem; min-width: 7.5rem; }
+  .tbl-matrix thead th:first-child { white-space: normal; }
+}
+
 /* Jurisdiction cards carry a list rather than the single paragraph .card
    was built for. */
 .card ul { margin: .6rem 0 0; padding-left: 1.05rem; color: var(--muted);
