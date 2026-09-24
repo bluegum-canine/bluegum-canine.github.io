@@ -406,7 +406,8 @@ def nav_html(current):
 def footnav_html():
     return "\n          ".join(
         '<li><a href="%s">%s</a></li>' % (h, l)
-        for l, h in NAV + [("Policies", "/policies.html"),
+        for l, h in NAV + [("Qualification", "/qualification.html"),
+                           ("Policies", "/policies.html"),
                            ("Privacy", "/privacy.html")])
 
 
@@ -429,6 +430,8 @@ def render(fragment_path, out_path, title, desc, current=""):
     page = page.replace("{{SERVICES_NAV}}", subnav_html(
         [(s, short) for s, _, short, _ in SERVICES], "/services/", out_path,
         "Services"))
+    page = page.replace("{{ABOUT_NAV}}", subnav_html(
+        ABOUT_PAGES, "/", out_path, "About"))
     page = page.replace("{{CASES_NAV}}", subnav_html(
         [(s, name) for s, name, _, _ in CASES], "/case-studies/", out_path,
         "Case studies"))
@@ -453,6 +456,15 @@ def render(fragment_path, out_path, title, desc, current=""):
     return len(page)
 
 
+
+# --------------------------------------------------------------- about
+# About and the qualification page are one topic split in two; this is the
+# strip that joins them. The qualification page is otherwise only reachable
+# from a link near the bottom of About.
+ABOUT_PAGES = [
+    ("about", "About me"),
+    ("qualification", "The qualification"),
+]
 
 # --------------------------------------------------------------- services
 # One page per service under /services/, with services.html as the hub. The
@@ -590,7 +602,7 @@ def main():
          "960 hours across 34 modules at Highland Canine, North Carolina — a "
          "six-month residential Master Trainer programme. The full module list, "
          "published.",
-         "/qualification.html"),
+         "/about.html"),
         # SHELVED 24 Aug 2026 — the training-tools page. The source is kept at
         # _src/training-tools.shelved.html. It named prong and electronic
         # collars directly, which invites an argument the business does not
