@@ -688,3 +688,60 @@ a.contact-value:hover { color: var(--accent-text); }
           column-gap: 2rem; }
 .toc li { margin: 0 0 .3rem; break-inside: avoid; }
 [id] { scroll-margin-top: 5.5rem; }
+
+/* ---------------------------------------------------------- pre-launch
+   The opening banner on every page and the splash at the root. Both are
+   switched in build.py (OPENING_BANNER, LAUNCH_SPLASH) and fall away on
+   CLIENTS_FROM, so this block can go once the practice is trading. */
+.opening-banner {
+  background: var(--accent-text); color: var(--paper);
+  font-family: var(--body); font-size: 1rem; line-height: 1.35;
+  border-bottom: 1px solid var(--moss-deep);
+}
+.opening-banner-in {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center;
+  gap: .25rem .9rem; padding-block: .5rem; text-align: center;
+}
+.opening-banner-tag {
+  font-family: var(--display-condensed); font-weight: 700;
+  text-transform: uppercase; letter-spacing: .12em; font-size: .92rem;
+}
+.opening-banner a { color: var(--paper); text-decoration: underline;
+  text-underline-offset: .18em; }
+.opening-banner a:hover { color: var(--paper-2); text-decoration-thickness: 2px; }
+
+.splash-body { margin: 0; background: var(--moss-deep); }
+.splash {
+  position: relative; min-height: 100vh; min-height: 100svh;
+  display: grid; place-items: center; overflow: hidden;
+  padding: clamp(2rem, 6vw, 4rem) var(--gutter);
+}
+.splash-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; filter: saturate(.8);
+}
+.splash::after {
+  /* moss wash over the photograph so the paper-coloured type reads at AA */
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(35,43,34,.78), rgba(35,43,34,.9));
+}
+.splash-in {
+  position: relative; z-index: 1; max-width: 34rem; text-align: center;
+  color: var(--paper); display: flex; flex-direction: column; align-items: center;
+}
+.splash-seal { width: clamp(5.5rem, 16vw, 8rem); height: auto; margin-bottom: 1.2rem; }
+.splash-label { color: var(--accent-soft); margin: 0; }
+.splash-name { color: var(--paper); margin: .35rem 0 0;
+  font-size: clamp(2.4rem, 9vw, 4.4rem); line-height: 1; }
+.splash-when {
+  font-family: var(--display-condensed); font-weight: 700; text-transform: uppercase;
+  letter-spacing: .14em; font-size: clamp(1.15rem, 3.6vw, 1.6rem);
+  color: var(--accent-on-moss); margin: .9rem 0 0;
+}
+.splash-rule { width: 3rem; height: 2px; background: var(--accent); margin: 1.5rem 0; }
+.splash-copy { font-family: var(--body); font-size: clamp(1.1rem, 2.6vw, 1.3rem);
+  line-height: 1.5; color: #E4DED2; margin: 0; }
+.splash-enter { margin-top: 2rem; }
+.splash-fine { font-family: var(--body); font-size: 1rem; color: #D9D3C6;
+  margin: 1.6rem 0 0; }
+.splash-fine a { color: var(--paper); text-underline-offset: .18em; }

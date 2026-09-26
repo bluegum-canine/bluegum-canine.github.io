@@ -85,6 +85,26 @@ TODAY = datetime.date.today()
 QUALIFIED = TODAY >= CERT_DATE
 TRADING = TODAY >= CLIENTS_FROM
 
+# Pre-launch dressing. While the practice is not yet taking dogs, the root URL
+# is a standalone splash ("opening early 2027 — come in and see what's
+# coming"), the real home page moves to /home.html, and every other page
+# carries a slim banner saying the same. Both switch off by themselves on
+# CLIENTS_FROM; set either to False to drop it sooner.
+LAUNCH_SPLASH = not TRADING
+OPENING_BANNER = not TRADING
+HOME = "/home.html" if LAUNCH_SPLASH else "/"
+# Email only until trading: no calls can be taken while away. Swaps the
+# header button, footer, every "Start here" band and the contact page over to
+# email; fragments mark phone-only copy <!--phone-->...<!--/phone--> and the
+# stand-in <!--email-first-->...<!--/email-first-->.
+EMAIL_FIRST = not TRADING
+EMAIL_CTA = """<p style="margin-top:1.4rem">Until the new year the best way to
+      reach me is by email. Tell me the whole story &mdash; what your dog does,
+      when it started and what you have tried &mdash; and I will write back.</p>
+    <div class="btn-row">
+      <a class="btn btn-solid" href="mailto:{{EMAIL}}">Email {{EMAIL}}</a>
+    </div>"""
+
 # About — the paragraph that carries the programme itself.
 CERT_STATUS = (
     "The certificate is dated 18 December 2026."
@@ -298,10 +318,10 @@ SHELL = """<!doctype html>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-
+{banner}
 <header class="masthead">
   <div class="wrap masthead-in">
-    <a class="wordmark" href="/">
+    <a class="wordmark" href="{home}">
       <!-- Rendered from bluegum-seal.pdf, the vector traced from the 6000px
            t-shirt master. One-colour line art rather than the earlier tonal
            version: the greys went muddy against the paper ground at footer
@@ -319,7 +339,7 @@ SHELL = """<!doctype html>
     <nav class="nav" aria-label="Main">
       {nav}
     </nav>
-    <a class="masthead-call" href="tel:{phone_e164}">{phone_display}</a>
+    {headcall}
   </div>
 </header>
 
@@ -353,8 +373,7 @@ SHELL = """<!doctype html>
       <div class="foot-col">
         <p class="label">Get in touch</p>
         <ul class="plain">
-          <li><a href="tel:{phone_e164}">{phone_display}</a></li>
-          <li><a href="mailto:{email}">{email}</a></li>
+          {footphone}          <li><a href="mailto:{email}">{email}</a></li>
           <li>{area}</li>
         </ul>
       </div>
@@ -380,6 +399,15 @@ SHELL = """<!doctype html>
        <a href="https://pages.github.com/">GitHub Pages</a>.</p>
   </div>
 </footer>
+</body>
+</html>
+"""
+
+
+# The splash at the root while LAUNCH_SPLASH is on. Same <head> as every other
+# page, but no masthead, nav or footer: one screen, one way in.
+SPLASH_SHELL = SHELL[:SHELL.index("<body>")] + """<body class="splash-body">
+{body}
 </body>
 </html>
 """
@@ -412,10 +440,28 @@ def footnav_html():
                            ("Privacy", "/privacy.html")])
 
 
-def render(fragment_path, out_path, title, desc, current=""):
+BANNER = """<div class="opening-banner" role="note">
+  <div class="wrap opening-banner-in">
+    <span class="opening-banner-tag">Opening early 2027</span>
+    <span class="opening-banner-text">Taking first dogs in the new year &mdash;
+      <a href="mailto:%s?subject=Opening%%202027">email now to be first on the list</a></span>
+  </div>
+</div>
+""" % EMAIL if OPENING_BANNER else ""
+
+
+def render(fragment_path, out_path, title, desc, current="", shell=None):
     with open(fragment_path) as f:
         body = f.read()
-    page = SHELL.format(
+    page = (shell or SHELL).format(
+        banner=BANNER, home=HOME,
+        headcall=('<a class="masthead-call" href="mailto:%s">Email me</a>'
+                  % EMAIL) if EMAIL_FIRST else
+                 '<a class="masthead-call" href="tel:%s">%s</a>'
+                 % (PHONE_E164, PHONE_DISPLAY),
+        footphone="" if EMAIL_FIRST else
+                  '<li><a href="tel:%s">%s</a></li>\n' % (PHONE_E164,
+                                                           PHONE_DISPLAY),
         title=html.escape(title), desc=html.escape(desc),
         canonical=SITE + "/" + out_path.replace("index.html", "").lstrip("/"),
         brand=BRAND, domain=SITE,
@@ -436,6 +482,15 @@ def render(fragment_path, out_path, title, desc, current=""):
     page = page.replace("{{CASES_NAV}}", subnav_html(
         [(s, name) for s, name, _, _ in CASES], "/case-studies/", out_path,
         "Case studies"))
+    if EMAIL_FIRST:
+        page = re.sub(r"<!--phone-->.*?<!--/phone-->", "", page, flags=re.S)
+        page = re.sub(
+            r'(<section class="section cta">.*?)<p style="margin-top:1\.4rem">'
+            r'.*?</p>\s*<div class="btn-row">.*?</div>',
+            lambda m: m.group(1) + EMAIL_CTA, page, flags=re.S)
+    else:
+        page = re.sub(r"<!--email-first-->.*?<!--/email-first-->", "", page,
+                      flags=re.S)
     # Let fragments use {{PHONE}}, {{EMAIL}} etc. without escaping headaches.
     for k, v in [("PHONE", PHONE_DISPLAY), ("PHONE_E164", PHONE_E164),
                  ("PHONE_WA", PHONE_WA),
@@ -582,7 +637,7 @@ def main():
     global CSSV
     CSSV = css_version()
     pages = [
-        ("index.html", "index.html",
+        ("index.html", "home.html" if LAUNCH_SPLASH else "index.html",
          "%s — Dog Training & Behaviour, Co. Sligo" % BRAND,
          "Calm, methodical dog training from Co. Sligo across Connacht and the "
          "midlands. Obedience, recall, reactivity and residential training with "
@@ -659,6 +714,16 @@ def main():
     ]
 
     total = 0
+    home_copy = os.path.join(ROOT, "home.html")
+    if LAUNCH_SPLASH:
+        total += render(os.path.join(SRC, "splash.html"), "index.html",
+                        "%s — Opening early 2027" % BRAND,
+                        "Calm, methodical dog training and behaviour help from "
+                        "Co. Sligo, opening early 2027.", shell=SPLASH_SHELL)
+        print("  %-28s %s" % ("index.html", "splash — opening early 2027"))
+    elif os.path.exists(home_copy):
+        # Launched: the home page is back at the root, so drop the copy.
+        os.remove(home_copy)
     for src_name, out, title, desc, cur in pages:
         total += render(os.path.join(SRC, src_name), out, title, desc, cur)
         print("  %-28s %s" % (out, title[:52]))
@@ -684,7 +749,8 @@ def main():
         print("  %-28s %s" % ("problems/%s.html" % slug, title))
 
     # robots + sitemap
-    urls = ["/", "/services.html", "/method.html", "/about.html",
+    urls = ["/"] + (["/home.html"] if LAUNCH_SPLASH else []) + [
+            "/services.html", "/method.html", "/about.html",
             "/qualification.html", "/assistance-dogs.html",
             "/case-studies.html",
             "/contact.html", "/policies.html", "/privacy.html", "/problems/"] + \
