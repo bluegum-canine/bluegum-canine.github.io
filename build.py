@@ -502,7 +502,7 @@ SERVICES = [
     ("detection", "Detection and scent work", "Detection",
      "Detection work is not a service offered yet. Information on how a dog "
      "learns a smell, and interest in bed bug, conservation and educational "
-     "projects, by email. No drugs or explosives work."),
+     "projects, by email."),
 ]
 
 # Assistance dogs and detection keep pages under /services/, but neither is a
