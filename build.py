@@ -48,6 +48,11 @@ PHONE_WA = PHONE_E164.lstrip("+")
 # too, but mixing the two across the site invites mistyping.
 EMAIL = "mark@bluegumcanine.ie"
 AREA = "Sligo, the North West & beyond"
+# Social accounts, set up 27 Sep 2026. Footer "Get in touch" column and the
+# LocalBusiness sameAs. Swap the Facebook URL for facebook.com/<username> once
+# the Page has a username claimed.
+INSTAGRAM = "https://www.instagram.com/bluegum_canine/"
+FACEBOOK = "https://www.facebook.com/profile.php?id=61594747357008"
 # Registered Business Name number, CRO Ireland — granted 7 Sep 2026 under the
 # Registration of Business Names Act 1963. Goes in the footer of every page and
 # in the structured data, the way a company number would. See the business plan,
@@ -201,6 +206,7 @@ LD = {
     "url": SITE,
     "telephone": PHONE_E164,
     "email": EMAIL,
+    "sameAs": [INSTAGRAM, FACEBOOK],
     "image": SITE + "/assets/img/og.jpg",
     "priceRange": "€€",
     "address": {
@@ -375,6 +381,8 @@ SHELL = """<!doctype html>
         <ul class="plain">
           {footphone}          <li><a href="mailto:{email}">{email}</a></li>
           <li>{area}</li>
+          <li><a href="{instagram}" target="_blank" rel="noopener noreferrer">Instagram</a>
+              &middot; <a href="{facebook}" target="_blank" rel="noopener noreferrer">Facebook</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -466,7 +474,7 @@ def render(fragment_path, out_path, title, desc, current="", shell=None):
         canonical=SITE + "/" + out_path.replace("index.html", "").lstrip("/"),
         brand=BRAND, domain=SITE,
         phone_e164=PHONE_E164, phone_display=PHONE_DISPLAY,
-        email=EMAIL, area=AREA, year=2026, rbn=RBN, proprietor=PROPRIETOR,
+        email=EMAIL, area=AREA, instagram=INSTAGRAM, facebook=FACEBOOK, year=2026, rbn=RBN, proprietor=PROPRIETOR,
         ld=json.dumps(LD, separators=(",", ":")),
         nav=nav_html(current), footnav=footnav_html(),
         footservices="\n          ".join(
