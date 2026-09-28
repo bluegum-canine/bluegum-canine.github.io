@@ -49,10 +49,9 @@ PHONE_WA = PHONE_E164.lstrip("+")
 EMAIL = "mark@bluegumcanine.ie"
 AREA = "Sligo, the North West & beyond"
 # Social accounts, set up 27 Sep 2026. Footer "Get in touch" column and the
-# LocalBusiness sameAs. Swap the Facebook URL for facebook.com/<username> once
-# the Page has a username claimed.
+# LocalBusiness sameAs.
 INSTAGRAM = "https://www.instagram.com/bluegum_canine/"
-FACEBOOK = "https://www.facebook.com/profile.php?id=61594747357008"
+FACEBOOK = "https://www.facebook.com/BluegumCanine"
 # Registered Business Name number, CRO Ireland — granted 7 Sep 2026 under the
 # Registration of Business Names Act 1963. Goes in the footer of every page and
 # in the structured data, the way a company number would. See the business plan,
