@@ -568,13 +568,12 @@ SERVICES = [
      "weeks off lead, or six weeks together. From \u20ac2,100, with a handover "
      "lesson and two follow-ups."),
     ("assistance-dog-training", "Assistance dogs", "Assistance dogs",
-     "Assistance dog training is not a service offered. Information and "
+     "Assistance dog training is not a service offered right now. Information and "
      "gentle guidance on assistance dogs, candidate dogs and public access, "
      "by email."),
     ("detection", "Detection and scent work", "Detection",
-     "Detection work is not a service offered yet. Information on how a dog "
-     "learns a smell, and interest in bed bug, conservation and educational "
-     "projects, by email."),
+     "Detection work is not a service offered right now. Information on how "
+     "a dog learns a smell, and questions by email."),
 ]
 
 # Assistance dogs and detection keep pages under /services/, but neither is a
@@ -673,7 +672,7 @@ def main():
          "/method.html"),
         ("about.html", "about.html",
          "About %s — %s" % (PERSON, BRAND),
-         "Forty-four years of dogs, and %s at the Highland Canine "
+         "Extensive experience with dogs, and %s at the Highland Canine "
          "School for Dog Trainers, North Carolina - a six-month residential "
          "programme, 960 hours. Full member of the International Association "
          "of Canine Professionals since 2025."
