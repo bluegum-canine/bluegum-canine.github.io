@@ -593,6 +593,10 @@ CASES = [
      "A two-year-old Great Dane made fearful by missed socialisation, growling "
      "at anyone who caught her eye. Several weeks of desensitisation, most of "
      "it done by her owner."),
+    ("luke", "Luke", "Luke: the dog who bit to get his way",
+     "A two-year-old small dog surrendered to be put down after repeatedly "
+     "biting his owner. Assessed as a missing education rather than fear, and "
+     "still in progress."),
 ]
 
 
