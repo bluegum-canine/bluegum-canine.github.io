@@ -726,6 +726,11 @@ def main():
          "how long it is kept, and your rights under Irish data protection "
          "law. No cookies, no tracking.",
          "/privacy.html"),
+        ("puppy-housetraining.html", "puppy-housetraining.html",
+         "Housetraining your puppy — %s" % BRAND,
+         "A one-page guide to housetraining a puppy: schedule, toilet spot, "
+         "crate, accidents, and what to avoid. Download the PDF.",
+         "/services.html"),
         ("problems/index.html", "problems/index.html",
          "Common problems — %s" % BRAND,
          "Pulling on the lead, poor recall, nervousness, velcro dogs, "
@@ -771,7 +776,7 @@ def main():
     # robots + sitemap
     urls = ["/"] + (["/home.html"] if LAUNCH_SPLASH else []) + [
             "/services.html", "/method.html", "/about.html",
-            "/qualification.html", "/assistance-dogs.html",
+            "/qualification.html", "/assistance-dogs.html", "/puppy-housetraining.html",
             "/case-studies.html",
             "/contact.html", "/policies.html", "/privacy.html", "/problems/"] + \
            ["/problems/%s.html" % s for s, _, _ in PROBLEMS] + \
