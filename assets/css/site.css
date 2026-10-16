@@ -445,6 +445,12 @@ main > .section:first-child :is(h1, h2).display { font-size: clamp(1.7rem, 4vw, 
    point. Still narrower than the prose column on a desktop. */
 .plate-video-lg { max-width: 30rem; }
 
+/* landscape variant. A clip shot on a chest camera is 16:9, and the width is
+   the point in it — the dog out ahead on the line, and the ground either
+   side of the trail. Wider than the portrait plates, still inside the column. */
+.plate-video-wide { max-width: 38rem; }
+.plate-video-wide video { aspect-ratio: 16 / 9; }
+
 /* squarer variant of the plate. A group shot whose subjects fill the frame
    corner to corner has nothing spare to give a 3:2 crop, and sits inside the
    contained plate with a strip of paper down either side. */
