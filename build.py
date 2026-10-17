@@ -217,7 +217,7 @@ LD = {
     # fixed region. See the rings on the About page. The counties are
     # the one-to-one catchment; residential and assessment work is taken
     # nationally, hence Ireland on the end. (Assistance dog training is not
-    # offered, and nor is detection — information and guidance only, by
+    # offered, and nor is working-dog work — information and guidance only, by
     # email.)
     "areaServed": [
         {"@type": "AdministrativeArea", "name": n}
@@ -571,16 +571,17 @@ SERVICES = [
      "Assistance dog training is not a service offered right now. Information and "
      "gentle guidance on assistance dogs, candidate dogs and public access, "
      "by email."),
-    ("detection", "Detection and scent work", "Detection",
-     "Detection work is not a service offered right now. Information on how "
-     "a dog learns a smell, and questions by email."),
+    ("working-dogs", "Working dogs", "Working dogs",
+     "Working dogs: single-purpose dogs that search, and dual-purpose dogs "
+     "that add operational protection work. Not a service offered right now "
+     "\u2014 information, and questions by email."),
 ]
 
-# Assistance dogs and detection keep pages under /services/, but neither is a
-# service offered, so they stay out of the Services strip and the footer's
+# Assistance dogs and working dogs keep pages under /services/, but neither is
+# a service offered, so they stay out of the Services strip and the footer's
 # Services list.
 OFFERED = [s for s in SERVICES
-           if s[0] not in ("assistance-dog-training", "detection")]
+           if s[0] not in ("assistance-dog-training", "working-dogs")]
 
 # --------------------------------------------------------------- case studies
 # One page per case under /case-studies/, with case-studies.html as the hub.
