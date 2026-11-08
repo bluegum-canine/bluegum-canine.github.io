@@ -574,8 +574,8 @@ SERVICES = [
      "by email."),
     ("working-dogs", "Working dogs", "Working dogs",
      "Working dogs: single-purpose dogs that search, and dual-purpose dogs "
-     "that add operational protection work. Not a service offered right now "
-     "\u2014 information, and questions by email."),
+     "that add operational protection work. Not a service offered right now. "
+     "Information, and questions by email."),
 ]
 
 # Assistance dogs and working dogs keep pages under /services/, but neither is
@@ -640,7 +640,7 @@ PROBLEMS = [
      "Growling over the food bowl or guarding toys. Why punishing the growl "
      "is the worst thing you can do, and what works instead."),
     ("barking-at-visitors", "Barking at every visitor",
-     "A dog that erupts at the doorbell. Alerting, excitement or fear \u2014 "
+     "A dog that erupts at the doorbell. Alerting, excitement or fear: "
      "they look alike and need different plans."),
     ("noise-fear", "Frightened of thunder and fireworks",
      "Shaking, hiding and bolting at storms and bangs. Why you cannot spoil a "
@@ -650,7 +650,7 @@ PROBLEMS = [
      "sickness and why the car has come to mean the vet."),
     ("repetitive-behaviour", "Spinning, pacing and chasing shadows",
      "Spinning, tail chasing, fence pacing, shadow and light chasing and lick "
-     "sores \u2014 where compulsive behaviour comes from, and why never to use "
+     "sores: where compulsive behaviour comes from, and why never to use "
      "a laser pen with a dog."),
 ]
 
