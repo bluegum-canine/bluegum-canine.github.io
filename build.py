@@ -537,6 +537,7 @@ def render(fragment_path, out_path, title, desc, current="", shell=None):
 ABOUT_PAGES = [
     ("about", "About me"),
     ("qualification", "The qualification"),
+    ("training-tools", "Training tools"),
 ]
 
 # --------------------------------------------------------------- services
@@ -690,11 +691,16 @@ def main():
          "six-month residential Master Trainer programme. The full module list, "
          "published.",
          "/about.html"),
-        # SHELVED 24 Aug 2026 — the training-tools page. The source is kept at
-        # _src/training-tools.shelved.html. It named prong and electronic
-        # collars directly, which invites an argument the business does not
-        # need; the balanced-approach section on the method page carries the
-        # position without naming hardware. Re-add this entry to publish it.
+        # Shelved 24 Aug 2026 for naming prong and electronic collars
+        # directly; published 8 Nov 2026 on Mark's instruction, on the view
+        # that being plain about the tools is worth more than avoiding the
+        # argument. The IACP prong collar assessment is named on it.
+        ("training-tools.html", "training-tools.html",
+         "Training tools — %s" % BRAND,
+         "Prong and electronic collars: where I stand, what usually goes "
+         "wrong, and the cases where they are the kinder answer. 40 hours of "
+         "the qualification, plus the IACP Prong Collar Knowledge Assessment.",
+         "/training-tools.html"),
         ("assistance-dogs.html", "assistance-dogs.html",
          "Assistance dogs and the law — %s" % BRAND,
          "What the law actually says about assistance dogs in Ireland and the "
@@ -777,7 +783,8 @@ def main():
     # robots + sitemap
     urls = ["/"] + (["/home.html"] if LAUNCH_SPLASH else []) + [
             "/services.html", "/method.html", "/about.html",
-            "/qualification.html", "/assistance-dogs.html", "/puppy-housetraining.html",
+            "/qualification.html", "/training-tools.html",
+            "/assistance-dogs.html", "/puppy-housetraining.html",
             "/case-studies.html",
             "/contact.html", "/policies.html", "/privacy.html", "/problems/"] + \
            ["/problems/%s.html" % s for s, _, _ in PROBLEMS] + \
