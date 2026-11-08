@@ -103,8 +103,8 @@ HOME = "/home.html" if LAUNCH_SPLASH else "/"
 # stand-in <!--email-first-->...<!--/email-first-->.
 EMAIL_FIRST = not TRADING
 EMAIL_CTA = """<p style="margin-top:1.4rem">Until the new year the best way to
-      reach me is by email. Tell me the whole story &mdash; what your dog does,
-      when it started and what you have tried &mdash; and I will write back.</p>
+      reach me is by email. Tell me the whole story: what your dog does,
+      when it started and what you have tried, and I will write back.</p>
     <div class="btn-row">
       <a class="btn btn-solid" href="mailto:{{EMAIL}}">Email {{EMAIL}}</a>
     </div>"""
@@ -120,12 +120,12 @@ CERT_STATUS = (
 )
 # Homepage — the short About panel.
 CERT_SENTENCE = (
-    "Master Trainer, Highland Canine School for Dog Trainers, North Carolina "
-    "&mdash; six months residential, 960 hours on campus, completed December "
+    "Master Trainer, Highland Canine School for Dog Trainers, North Carolina, "
+    "six months residential, 960 hours on campus, completed December "
     "2026."
     if QUALIFIED else
     "Currently completing the Master Trainer Program at the Highland Canine "
-    "School for Dog Trainers, North Carolina &mdash; six months residential, "
+    "School for Dog Trainers, North Carolina, six months residential, "
     "960 hours on campus, finishing December 2026."
 )
 # About — the credentials list.
@@ -460,7 +460,7 @@ def footnav_html():
 BANNER = """<div class="opening-banner" role="note">
   <div class="wrap opening-banner-in">
     <span class="opening-banner-tag">Opening early 2027</span>
-    <span class="opening-banner-text">Taking first dogs in the new year &mdash;
+    <span class="opening-banner-text">Taking first dogs in the new year:
       <a href="mailto:%s?subject=Opening%%202027">email now to be first on the list</a></span>
   </div>
 </div>
@@ -616,7 +616,7 @@ def subnav_html(items, base, current, label):
 # --------------------------------------------------------------- problems
 PROBLEMS = [
     ("pulling-on-the-lead", "Pulling on the lead",
-     "How to stop a dog pulling on the lead — why it happens, why the usual "
+     "How to stop a dog pulling on the lead: why it happens, why the usual "
      "fixes stall, and what actually works."),
     ("recall", "Poor recall",
      "A dog that will not come back. Why recall breaks down, and how to "
@@ -628,7 +628,7 @@ PROBLEMS = [
      "A dog that follows you room to room and cannot settle alone. "
      "Over-attachment, separation anxiety, and the difference between them."),
     ("destructive-behaviour", "Destructive at home",
-     "Chewing, digging and damage while you are out — what it usually means "
+     "Chewing, digging and damage while you are out: what it usually means "
      "and how to fix it properly."),
     ("livestock-worrying", "Livestock worrying",
      "The most serious problem a dog can have in the west of Ireland. What "
@@ -660,24 +660,24 @@ def main():
     CSSV = css_version()
     pages = [
         ("index.html", "home.html" if LAUNCH_SPLASH else "index.html",
-         "%s — Dog Training & Behaviour, Co. Sligo" % BRAND,
+         "%s | Dog Training & Behaviour, Co. Sligo" % BRAND,
          "Calm, methodical dog training from Co. Sligo across Connacht and the "
          "midlands. Obedience, recall, reactivity and residential training with "
          "%s, %s." % (PERSON, CRED_META), ""),
         ("services.html", "services.html",
-         "Services — %s" % BRAND,
+         "Services | %s" % BRAND,
          "Puppy foundations, everyday obedience, six-week group classes, "
          "behaviour consultation, one-to-one sessions and residential "
          "board-and-train, from Co. Sligo.",
          "/services.html"),
         ("method.html", "method.html",
-         "The method — %s" % BRAND,
+         "The method | %s" % BRAND,
          "Freedom through obedience. A balanced, bespoke approach built on "
          "five steps: assessment first, then teaching, reinforcing, proofing "
          "and maintaining.",
          "/method.html"),
         ("about.html", "about.html",
-         "About %s — %s" % (PERSON, BRAND),
+         "About %s | %s" % (PERSON, BRAND),
          "Extensive experience with dogs, and %s at the Highland Canine "
          "School for Dog Trainers, North Carolina - a six-month residential "
          "programme, 960 hours. Full member of the International Association "
@@ -686,8 +686,8 @@ def main():
             else "completing the Master Trainer Program"),
          "/about.html"),
         ("qualification.html", "qualification.html",
-         "The qualification — %s" % BRAND,
-         "960 hours across 34 modules at Highland Canine, North Carolina — a "
+         "The qualification | %s" % BRAND,
+         "960 hours across 34 modules at Highland Canine, North Carolina, a "
          "six-month residential Master Trainer programme. The full module list, "
          "published.",
          "/about.html"),
@@ -696,19 +696,19 @@ def main():
         # that being plain about the tools is worth more than avoiding the
         # argument. The IACP prong collar assessment is named on it.
         ("training-tools.html", "training-tools.html",
-         "Training tools — %s" % BRAND,
+         "Training tools | %s" % BRAND,
          "Prong and electronic collars: where I stand, what usually goes "
          "wrong, and the cases where they are the kinder answer. 40 hours of "
          "the qualification, plus the IACP Prong Collar Knowledge Assessment.",
          "/training-tools.html"),
         ("assistance-dogs.html", "assistance-dogs.html",
-         "Assistance dogs and the law — %s" % BRAND,
+         "Assistance dogs and the law | %s" % BRAND,
          "What the law actually says about assistance dogs in Ireland and the "
          "UK, compared with the American rules. Access rights, owner-trained "
          "dogs, and which kinds of dog the legislation names.",
          "/assistance-dogs.html"),
         ("case-studies.html", "case-studies.html",
-         "Case studies — %s" % BRAND,
+         "Case studies | %s" % BRAND,
          "Chloe: a stray Doodle with a bite history who would not take food or "
          "play, taught a reliable off-lead recall in seven days. Stevie: a "
          "Great Dane made fear aggressive by missed socialisation, growling at "
@@ -716,30 +716,30 @@ def main():
          "and where each dog ended up.",
          "/case-studies.html"),
         ("contact.html", "contact.html",
-         "Contact — %s" % BRAND,
+         "Contact | %s" % BRAND,
          "Ring, message on WhatsApp or email. Sligo, Leitrim, Roscommon, "
-         "Longford, Mayo and Cavan as standard — residential training taken "
+         "Longford, Mayo and Cavan as standard. Residential training taken "
          "from anywhere in Ireland.",
          "/contact.html"),
         ("policies.html", "policies.html",
-         "Policies — %s" % BRAND,
+         "Policies | %s" % BRAND,
          "Who I work with, vaccinations, payment by bank transfer, Revolut or "
          "cheque, cancellations, refunds, the 14-day right to cancel, and what "
          "I do and do not guarantee.",
          "/policies.html"),
         ("privacy.html", "privacy.html",
-         "Privacy — %s" % BRAND,
+         "Privacy | %s" % BRAND,
          "What information I keep about you and your dog, why, who sees it, "
          "how long it is kept, and your rights under Irish data protection "
          "law. No cookies, no tracking.",
          "/privacy.html"),
         ("puppy-housetraining.html", "puppy-housetraining.html",
-         "Housetraining your puppy — %s" % BRAND,
+         "Housetraining your puppy | %s" % BRAND,
          "A one-page guide to housetraining a puppy: schedule, toilet spot, "
          "crate, accidents, and what to avoid. Download the PDF.",
          "/services.html"),
         ("problems/index.html", "problems/index.html",
-         "Common problems — %s" % BRAND,
+         "Common problems | %s" % BRAND,
          "Pulling on the lead, poor recall, nervousness, velcro dogs, "
          "destruction at home and livestock worrying. Every one is workable.",
          "/problems/"),
@@ -749,7 +749,7 @@ def main():
     home_copy = os.path.join(ROOT, "home.html")
     if LAUNCH_SPLASH:
         total += render(os.path.join(SRC, "splash.html"), "index.html",
-                        "%s — Opening early 2027" % BRAND,
+                        "%s | Opening early 2027" % BRAND,
                         "Calm, methodical dog training and behaviour help from "
                         "Co. Sligo, opening early 2027.", shell=SPLASH_SHELL)
         print("  %-28s %s" % ("index.html", "splash — opening early 2027"))
@@ -764,20 +764,20 @@ def main():
     for slug, title, _, desc in SERVICES:
         out = "services/%s.html" % slug
         total += render(os.path.join(SRC, out), out,
-                        "%s — %s" % (title, BRAND), desc, "/services.html")
+                        "%s | %s" % (title, BRAND), desc, "/services.html")
         print("  %-28s %s" % (out, title))
 
     for slug, _, title, desc in CASES:
         out = "case-studies/%s.html" % slug
         total += render(os.path.join(SRC, out), out,
-                        "%s — %s" % (title, BRAND), desc, "/case-studies.html")
+                        "%s | %s" % (title, BRAND), desc, "/case-studies.html")
         print("  %-28s %s" % (out, title[:52]))
 
     # one page per problem
     for slug, title, desc in PROBLEMS:
         total += render(os.path.join(SRC, "problems", slug + ".html"),
                         "problems/%s.html" % slug,
-                        "%s — %s" % (title, BRAND), desc, "/problems/")
+                        "%s | %s" % (title, BRAND), desc, "/problems/")
         print("  %-28s %s" % ("problems/%s.html" % slug, title))
 
     # robots + sitemap
