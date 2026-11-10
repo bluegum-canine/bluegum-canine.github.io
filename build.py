@@ -441,6 +441,18 @@ def css_version():
 CSSV = None
 
 
+def asset_version(relpath):
+    """Same trick as css_version, for any asset. The hero photograph gets
+    re-cropped from time to time under the same filename, and without this a
+    visitor who has seen the old one keeps seeing it."""
+    p = os.path.join(ROOT, relpath)
+    try:
+        with open(p, "rb") as f:
+            return hashlib.sha1(f.read()).hexdigest()[:8]
+    except OSError:
+        return "0"
+
+
 def nav_html(current):
     out = []
     for label, href in NAV:
@@ -515,6 +527,7 @@ def render(fragment_path, out_path, title, desc, current="", shell=None):
                  ("AREA", AREA),
                  ("CERT_STATUS", CERT_STATUS), ("CERT_SENTENCE", CERT_SENTENCE),
                  ("CERT_TAG", CERT_TAG), ("CERT_LINE", CERT_LINE),
+                 ("HEROV", asset_version("assets/img/hero-dogs.jpg")),
                  ("CALLS", CALLS), ("DOGS", DOGS),
                  ("PROPRIETOR", PROPRIETOR), ("RBN", RBN),
                  ("PRIVACY_UPDATED", PRIVACY_UPDATED)]:
