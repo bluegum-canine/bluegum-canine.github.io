@@ -105,7 +105,7 @@ DNS at the registrar needs four `A` records for the apex, and a `CNAME` for
 @    A      185.199.109.153
 @    A      185.199.110.153
 @    A      185.199.111.153
-www  CNAME  squirreleater.github.io
+www  CNAME  bluegum-canine.github.io
 ```
 
 ## Visibility
