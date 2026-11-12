@@ -764,3 +764,12 @@ a.contact-value:hover { color: var(--accent-text); }
 .splash-fine { font-family: var(--body); font-size: 1rem; color: #D9D3C6;
   margin: 1.6rem 0 0; }
 .splash-fine a { color: var(--paper); text-underline-offset: .18em; }
+
+/* The prong collar certificate sits in the badge row beside the two logos.
+   It is a document rather than a mark, so it gets a hairline and a little
+   lift to read as something you can open, and it stays small enough not to
+   shout over the bodies that issued it. */
+.badges .cert-thumb img {
+  width: 200px; border: 1px solid var(--rule); border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.12);
+}
