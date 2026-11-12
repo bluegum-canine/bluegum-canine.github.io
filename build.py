@@ -362,12 +362,7 @@ SHELL = """<!doctype html>
         <p class="foot-note">Calm, methodical training for dogs that have to
            live in the real world.</p>
         <span class="foot-badges">
-          <a href="https://highlandcanine.com/" target="_blank" rel="noopener noreferrer"
-             aria-label="Highland Canine Training (opens in a new tab)"><img
-             class="foot-badge" src="/assets/img/highland.png"
-             alt="Highland Canine Training, LLC" width="180" height="37"
-             loading="lazy"></a>
-          <a href="https://iacpdogs.org/" target="_blank" rel="noopener noreferrer"
+{highlandbadge}          <a href="https://iacpdogs.org/" target="_blank" rel="noopener noreferrer"
              aria-label="International Association of Canine Professionals (opens in a new tab)"><img
              class="foot-badge" src="/assets/img/iacp-logo.png"
              alt="International Association of Canine Professionals" width="180"
@@ -478,6 +473,14 @@ BANNER = """<div class="opening-banner" role="note">
 """ % EMAIL if OPENING_BANNER else ""
 
 
+HIGHLAND_BADGE = """          <a href="https://highlandcanine.com/" target="_blank" rel="noopener noreferrer"
+             aria-label="Highland Canine Training (opens in a new tab)"><img
+             class="foot-badge" src="/assets/img/highland.png"
+             alt="Highland Canine Training, LLC" width="180" height="37"
+             loading="lazy"></a>
+"""
+
+
 def render(fragment_path, out_path, title, desc, current="", shell=None):
     with open(fragment_path) as f:
         body = f.read()
@@ -487,6 +490,11 @@ def render(fragment_path, out_path, title, desc, current="", shell=None):
                   % EMAIL) if EMAIL_FIRST else
                  '<a class="masthead-call" href="tel:%s">%s</a>'
                  % (PHONE_E164, PHONE_DISPLAY),
+        # The school's mark belongs where the qualification is set out and
+        # argued for, not in the footer of every page on the site. IACP is
+        # different: that is a membership body Bluegum belongs to, and it
+        # stands on every page.
+        highlandbadge=HIGHLAND_BADGE if out_path == "qualification.html" else "",
         footphone="" if EMAIL_FIRST else
                   '<li><a href="tel:%s">%s</a></li>\n' % (PHONE_E164,
                                                            PHONE_DISPLAY),
