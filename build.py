@@ -571,18 +571,20 @@ SERVICES = [
     ("puppy-training", "Puppy foundations", "Puppy training",
      "Puppy training in your own home in Co. Sligo, from the week your puppy "
      "comes home: socialisation, handling, lead work and toilet training. "
-     "\u20ac150 a session."),
+     "\u20ac400 for three home visits."),
     ("obedience", "Everyday obedience", "Obedience",
      "Recall, settle, loose lead and stopping on command, proofed around real "
      "distraction. One-to-one dog obedience training from Co. Sligo, \u20ac150 "
-     "a session."),
+     "a session, or \u20ac765 for six."),
     ("group-classes", "Group classes", "Group classes",
-     "Six-week small-group obedience classes in the Sligo area, \u20ac175. "
+     "Six-week small-group obedience classes in the Sligo area, \u20ac175 for "
+     "the whole course. "
      "Recall, settle, loose lead and stopping on command, around other dogs."),
     ("behaviour-consultation", "Behaviour consultation",
      "Behaviour consultation",
      "Reactivity, aggression, anxiety and livestock worrying: an assessment "
-     "where the behaviour happens and a written plan, \u20ac350. Co. Sligo and "
+     "where the behaviour happens, a written plan and a follow-up visit, "
+     "\u20ac350. Co. Sligo and "
      "the North West."),
     ("one-to-one", "One-to-one sessions", "One-to-one",
      "Private dog training at your home across Sligo, Leitrim, Roscommon, "
