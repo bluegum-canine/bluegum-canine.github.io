@@ -643,6 +643,10 @@ PROBLEMS = [
     ("recall", "Poor recall",
      "A dog that will not come back. Why recall breaks down, and how to "
      "rebuild it so you can let your dog off the lead again."),
+    ("growling-snapping-biting", "Growled at, snapped at or bitten someone",
+     "A dog that has growled at, snapped at or bitten a person. What to do "
+     "tonight, why you should never punish a growl, what is usually behind "
+     "aggression, and how it is assessed and worked. Co. Sligo."),
     ("nervous-around-people", "Nervous around people",
      "Barking, hiding or shrinking when visitors call. What fear-based "
      "behaviour actually is, and how it is changed."),
