@@ -773,3 +773,12 @@ a.contact-value:hover { color: var(--accent-text); }
   width: 200px; border: 1px solid var(--rule); border-radius: 3px;
   box-shadow: 0 1px 3px rgba(0,0,0,.12);
 }
+.splash-services {
+  list-style: none; padding: 0; margin: 1.5rem 0 0;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: .45rem .55rem;
+}
+.splash-services li {
+  font-family: var(--display-condensed); font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; font-size: .9rem; color: var(--paper);
+  border: 1px solid rgba(242,237,228,.45); padding: .3rem .7rem .34rem;
+}
