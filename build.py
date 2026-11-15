@@ -171,7 +171,9 @@ PRIVATE = True
 # site.css use ../fonts/ relative paths so they survive any BASE.
 #
 # On launch: SERVE_ORIGIN = DOMAIN, BASE = "", rename CNAME.disabled back.
-SERVE_ORIGIN = "https://bluegum-canine.github.io"
+# Served on bluegumcanine.com from 15 Nov 2026 (CNAME file at the repo root);
+# the .ie is to follow. github.io now redirects here.
+SERVE_ORIGIN = "https://bluegumcanine.com"
 BASE = ""
 
 # The origin used for canonical, og:url, og:image and the structured data.
