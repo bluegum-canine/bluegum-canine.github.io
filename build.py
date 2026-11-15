@@ -572,10 +572,10 @@ SERVICES = [
      "Puppy training in your own home in Co. Sligo, from the week your puppy "
      "comes home: socialisation, handling, lead work and toilet training. "
      "\u20ac400 for three home visits."),
-    ("obedience", "Everyday obedience", "Obedience",
-     "Recall, settle, loose lead and stopping on command, proofed around real "
-     "distraction. One-to-one dog obedience training from Co. Sligo, \u20ac150 "
-     "a session, or \u20ac765 for six."),
+    ("one-to-one", "One-to-one training", "One-to-one",
+     "One-to-one dog obedience training at your home across Sligo, Leitrim, "
+     "Roscommon, Longford, Mayo and Cavan: recall, settle, loose lead and "
+     "stopping on command. \u20ac150 a session, or \u20ac765 for six."),
     ("group-classes", "Group classes", "Group classes",
      "Six-week small-group obedience classes in the Sligo area, \u20ac175 for "
      "the whole course. "
@@ -586,9 +586,6 @@ SERVICES = [
      "where the behaviour happens, a written plan and a follow-up visit, "
      "\u20ac350. Co. Sligo and "
      "the North West."),
-    ("one-to-one", "One-to-one sessions", "One-to-one",
-     "Private dog training at your home across Sligo, Leitrim, Roscommon, "
-     "Longford, Mayo and Cavan. \u20ac150 a session, or \u20ac765 for six."),
     ("residential-training", "Residential training", "Residential",
      "Residential board-and-train in Co. Sligo: three weeks on lead, three "
      "weeks off lead, or six weeks together. From \u20ac2,100, with a handover "
@@ -691,8 +688,8 @@ def main():
          "%s, %s." % (PERSON, CRED_META), ""),
         ("services.html", "services.html",
          "Services | %s" % BRAND,
-         "Puppy foundations, everyday obedience, six-week group classes, "
-         "behaviour consultation, one-to-one sessions and residential "
+         "Puppy foundations, one-to-one obedience training, six-week group "
+         "classes, behaviour consultation and residential "
          "board-and-train, from Co. Sligo.",
          "/services.html"),
         ("method.html", "method.html",
@@ -785,6 +782,18 @@ def main():
         total += render(os.path.join(SRC, src_name), out, title, desc, cur)
         print("  %-28s %s" % (out, title[:52]))
 
+
+    # Everyday obedience was merged into the one-to-one page on 15 Nov 2026.
+    # The old address stays as a forwarder so links already out there work.
+    with open(os.path.join(ROOT, "services", "obedience.html"), "w") as f:
+        f.write('<!doctype html>\n<html lang="en-IE"><head><meta charset="utf-8">\n'
+                '<meta name="robots" content="noindex">\n'
+                '<title>%s</title>\n'
+                '<link rel="canonical" href="%s/services/one-to-one.html">\n'
+                '<meta http-equiv="refresh" content="0; url=%s/services/one-to-one.html">\n'
+                '</head><body><p><a href="%s/services/one-to-one.html">'
+                'Everyday obedience is now part of one-to-one training</a>.</p>'
+                '</body></html>\n' % (BRAND, SITE, BASE, BASE))
 
     for slug, title, _, desc in SERVICES:
         out = "services/%s.html" % slug
