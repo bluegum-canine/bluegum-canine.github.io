@@ -561,6 +561,7 @@ ABOUT_PAGES = [
     ("about", "About me"),
     ("qualification", "The qualification"),
     ("training-tools", "Training tools"),
+    ("dog-health", "Your dog\u2019s health"),
 ]
 
 # --------------------------------------------------------------- services
@@ -727,6 +728,15 @@ def main():
          "wrong, and the cases where they are the kinder answer. 40 hours of "
          "the qualification, plus the IACP Prong Collar Knowledge Assessment.",
          "/training-tools.html"),
+        # Added 19 Nov 2026 after the kennel health and first aid lectures:
+        # "not a vet, but I know what to look for". Fourth tab of the About
+        # strip. Nothing on it may read as diagnosis or treatment advice.
+        ("dog-health.html", "dog-health.html",
+         "Your dog\u2019s health | %s" % BRAND,
+         "I am a dog trainer, not a vet. What I am trained to notice in a "
+         "dog that is unwell, what I do about it, the first aid I know, and "
+         "what I will never do with somebody else\u2019s dog.",
+         "/about.html"),
         ("assistance-dogs.html", "assistance-dogs.html",
          "Assistance dogs and the law | %s" % BRAND,
          "What the law actually says about assistance dogs in Ireland and the "
@@ -821,7 +831,7 @@ def main():
     # robots + sitemap
     urls = ["/"] + (["/home.html"] if LAUNCH_SPLASH else []) + [
             "/services.html", "/method.html", "/about.html",
-            "/qualification.html", "/training-tools.html",
+            "/qualification.html", "/training-tools.html", "/dog-health.html",
             "/assistance-dogs.html", "/puppy-housetraining.html",
             "/case-studies.html",
             "/contact.html", "/policies.html", "/privacy.html", "/problems/"] + \
