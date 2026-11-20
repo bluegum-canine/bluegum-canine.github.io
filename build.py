@@ -52,6 +52,14 @@ AREA = "Sligo, the North West & beyond"
 # LocalBusiness sameAs.
 INSTAGRAM = "https://www.instagram.com/bluegum_canine/"
 FACEBOOK = "https://www.facebook.com/BluegumCanine"
+# Mark, 19 Nov 2026: the Facebook page is not in use yet. Set True to bring the
+# footer icon and the schema link back.
+SHOW_FACEBOOK = False
+FB_LINK = '''
+            <a href="%s" target="_blank" rel="noopener noreferrer"
+               aria-label="Facebook (opens in a new tab)"><svg viewBox="0 0 24 24"
+               width="22" height="22" aria-hidden="true" fill="currentColor"><path
+               d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H7.9v3h2.6V21z"/></svg></a>''' % FACEBOOK if SHOW_FACEBOOK else ""
 # Registered Business Name number, CRO Ireland — granted 7 Sep 2026 under the
 # Registration of Business Names Act 1963. Goes in the footer of every page and
 # in the structured data, the way a company number would. See the business plan,
@@ -208,7 +216,7 @@ LD = {
     "url": SITE,
     "telephone": PHONE_E164,
     "email": EMAIL,
-    "sameAs": [INSTAGRAM, FACEBOOK],
+    "sameAs": [INSTAGRAM, FACEBOOK] if SHOW_FACEBOOK else [INSTAGRAM],
     "image": SITE + "/assets/img/og.jpg",
     "priceRange": "€€",
     "address": {
@@ -383,11 +391,7 @@ SHELL = """<!doctype html>
                width="22" height="22" aria-hidden="true" fill="none"
                stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18"
                height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3"
-               cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a>
-            <a href="{facebook}" target="_blank" rel="noopener noreferrer"
-               aria-label="Facebook (opens in a new tab)"><svg viewBox="0 0 24 24"
-               width="22" height="22" aria-hidden="true" fill="currentColor"><path
-               d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H7.9v3h2.6V21z"/></svg></a>
+               cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a>{fblink}
           </li>
         </ul>
       </div>
@@ -505,7 +509,7 @@ def render(fragment_path, out_path, title, desc, current="", shell=None):
         canonical=SITE + "/" + out_path.replace("index.html", "").lstrip("/"),
         brand=BRAND, domain=SITE,
         phone_e164=PHONE_E164, phone_display=PHONE_DISPLAY,
-        email=EMAIL, area=AREA, instagram=INSTAGRAM, facebook=FACEBOOK, year=2026, rbn=RBN, proprietor=PROPRIETOR,
+        email=EMAIL, area=AREA, instagram=INSTAGRAM, fblink=FB_LINK, year=2026, rbn=RBN, proprietor=PROPRIETOR,
         ld=json.dumps(LD, separators=(",", ":")),
         nav=nav_html(current), footnav=footnav_html(),
         footservices="\n          ".join(
