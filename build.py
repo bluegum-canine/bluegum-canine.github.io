@@ -765,7 +765,7 @@ def main():
          "Policies | %s" % BRAND,
          "Who I work with, vaccinations, payment by bank transfer, Revolut or "
          "cheque, cancellations, refunds, the 14-day right to cancel, and what "
-         "I do and do not guarantee.",
+         "I can and cannot promise.",
          "/policies.html"),
         ("privacy.html", "privacy.html",
          "Privacy | %s" % BRAND,
