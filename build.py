@@ -417,7 +417,7 @@ SHELL = """<!doctype html>
        <a href="https://pages.github.com/">GitHub Pages</a>.</p>
   </div>
 </footer>
-</body>
+{cfbeacon}</body>
 </html>
 """
 
@@ -426,7 +426,7 @@ SHELL = """<!doctype html>
 # page, but no masthead, nav or footer: one screen, one way in.
 SPLASH_SHELL = SHELL[:SHELL.index("<body>")] + """<body class="splash-body">
 {body}
-</body>
+{cfbeacon}</body>
 </html>
 """
 
@@ -440,6 +440,47 @@ def css_version():
 
 
 CSSV = None
+
+# --------------------------------------------------- visitor statistics
+# Cloudflare Web Analytics. Empty string means no beacon is emitted AND the
+# privacy page says there is no tracking; paste the site token to turn both
+# on in the same build, so the page can never be making a promise the site
+# is breaking. Cloudflare state that the product "does not use any
+# client-side state, such as cookies or localStorage, to collect usage
+# metrics" and does not fingerprint by IP or user agent, which is why this
+# needs no consent banner. It reports country, path, referrer, device type,
+# browser and OS — never an IP address and never a town.
+CF_BEACON_TOKEN = ""
+
+# The privacy page moves with the switch above, in the same build.
+ANALYTICS_PARA = ("""      <p><strong>This site sets no cookies and does no advertising
+        tracking.</strong> It does count visits, using <a
+        href="https://www.cloudflare.com/web-analytics/" target="_blank"
+        rel="noopener noreferrer">Cloudflare Web Analytics</a>, and I want to
+        be exact about what that means. I can see how many pages were looked
+        at, which ones, which country a visit came from, whether it was a
+        phone or a computer, which browser, and which site sent the visitor
+        here if any.</p>
+      <p><strong>I cannot see who you are.</strong> No IP address is reported
+        to me, no town, nothing that identifies a person, and I cannot follow
+        one visitor from page to page or tell a returning visitor from a new
+        one. Cloudflare state that it &ldquo;does not use any client-side
+        state, such as cookies or localStorage, to collect usage
+        metrics&rdquo; and does not fingerprint people by IP address or
+        browser. That is why there is no cookie banner on this site: there is
+        no cookie to ask you about.</p>
+      <p>There are no advertising tags and no social media widgets, the fonts
+        are served from this site rather than from Google, and there are no
+        forms, so nothing you type is collected.</p>"""
+    if CF_BEACON_TOKEN else
+    """      <p><strong>This site sets no cookies and does no tracking.</strong>
+        There are no analytics, no advertising tags and no social media
+        widgets, and the fonts are served from this site rather than from
+        Google. There are no forms, so nothing you type is collected.</p>""")
+
+CF_BEACON = ('<script defer src="https://static.cloudflareinsights.com/'
+             'beacon.min.js" data-cf-beacon=\'{"token": "%s"}\'></script>\n'
+             % CF_BEACON_TOKEN) if CF_BEACON_TOKEN else ""
 
 
 def asset_version(relpath):
@@ -501,6 +542,7 @@ def render(fragment_path, out_path, title, desc, current="", shell=None):
         # argued for, not in the footer of every page on the site. IACP is
         # different: that is a membership body Bluegum belongs to, and it
         # stands on every page.
+        cfbeacon=CF_BEACON,
         highlandbadge=HIGHLAND_BADGE if out_path == "qualification.html" else "",
         footphone="" if EMAIL_FIRST else
                   '<li><a href="tel:%s">%s</a></li>\n' % (PHONE_E164,
@@ -542,6 +584,7 @@ def render(fragment_path, out_path, title, desc, current="", shell=None):
                  ("CERT_STATUS", CERT_STATUS), ("CERT_SENTENCE", CERT_SENTENCE),
                  ("CERT_TAG", CERT_TAG), ("CERT_LINE", CERT_LINE),
                  ("HEROV", asset_version("assets/img/hero-dogs.jpg")),
+                 ("ANALYTICS_PARA", ANALYTICS_PARA),
                  ("CALLS", CALLS), ("DOGS", DOGS),
                  ("PROPRIETOR", PROPRIETOR), ("RBN", RBN),
                  ("PRIVACY_UPDATED", PRIVACY_UPDATED)]:
