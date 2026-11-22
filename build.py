@@ -450,7 +450,7 @@ CSSV = None
 # metrics" and does not fingerprint by IP or user agent, which is why this
 # needs no consent banner. It reports country, path, referrer, device type,
 # browser and OS — never an IP address and never a town.
-CF_BEACON_TOKEN = ""
+CF_BEACON_TOKEN = "8101312471524fba84a422dc803566b1"
 
 # The privacy page moves with the switch above, in the same build.
 ANALYTICS_PARA = ("""      <p><strong>This site sets no cookies and does no advertising
