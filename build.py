@@ -514,8 +514,9 @@ def footnav_html():
 BANNER = """<div class="opening-banner" role="note">
   <div class="wrap opening-banner-in">
     <span class="opening-banner-tag">Opening early 2027</span>
-    <span class="opening-banner-text">Taking first dogs in the new year:
-      <a href="mailto:%s?subject=Opening%%202027">email now to be first on the list</a></span>
+    <span class="opening-banner-text">Twenty per cent off for my first six
+      months: <a href="mailto:%s?subject=Opening%%202027">email now to be first
+      on the list</a></span>
   </div>
 </div>
 """ % EMAIL if OPENING_BANNER else ""
@@ -624,10 +625,10 @@ SERVICES = [
      "One-to-one dog obedience training at your home across Sligo, Leitrim, "
      "Roscommon, Longford, Mayo and Cavan: recall, settle, loose lead and "
      "stopping on command. \u20ac150 a session, or \u20ac765 for six."),
-    ("group-classes", "Group classes", "Group classes",
-     "Six-week small-group obedience classes in the Sligo area, \u20ac175 for "
-     "the whole course. "
-     "Recall, settle, loose lead and stopping on command, around other dogs."),
+    # Group classes shelved 28 Nov 2026 until there is a hall to run
+    # them in (Open Questions Q-88). The page source is kept at
+    # _src/services/group-classes.shelved.html; re-add this entry and
+    # rename the file to bring it back.
     ("behaviour-consultation", "Behaviour consultation",
      "Behaviour consultation",
      "Reactivity, aggression, anxiety and livestock worrying: an assessment "
@@ -740,9 +741,8 @@ def main():
          "%s, %s." % (PERSON, CRED_META), ""),
         ("services.html", "services.html",
          "Services | %s" % BRAND,
-         "Puppy foundations, one-to-one obedience training, six-week group "
-         "classes, behaviour consultation and residential "
-         "board-and-train, from Co. Sligo.",
+         "Puppy foundations, one-to-one obedience training, behaviour "
+         "consultation and residential board-and-train, from Co. Sligo.",
          "/services.html"),
         ("method.html", "method.html",
          "The method | %s" % BRAND,
